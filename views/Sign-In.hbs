@@ -1,0 +1,36 @@
+<div class="login-wrapper">
+  <h2 class="login-title">Log In</h2>
+
+  <form action="/login" method="POST">
+    <div class="form-grid-container">
+
+      <div class="form-grid-items">
+
+        <label for="email">Email </label>
+        <br />
+        {{#if errMessage.email}}
+          <span class="form-error-msg">{{errMessage.email}}</span>
+        {{/if}}<br />
+        <input type="email" name="email" id="email" value="{{values.email}}" />
+      </div>
+      <div class="form-grid-items">
+
+        <label for="password">Password </label>
+        <br />
+        {{#if errMessage.password}}
+          <span class="form-error-msg">{{errMessage.password}}</span>
+        {{/if}}<br />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          class="error"
+          value="{{values.password}}"
+        />
+      </div>
+      <div class="form-grid-items">
+        <button class="button" type="submit">Log In</button>
+      </div>
+    </div>
+  </form>
+</div>

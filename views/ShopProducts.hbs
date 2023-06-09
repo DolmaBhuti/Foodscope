@@ -1,5 +1,50 @@
-<main>
-  <section class="products">
+<section class="products">
+  <h2>iPhone Cases</h2>
+      <div class="iphone-grid">
+  {{#each data}}
+   {{#if_equal ProductCategory "iPhone Case"}}
+        <div class="product-card">
+          <div class="product-img">
+            <img src="{{ProductImage}}" alt="" />
+          </div>
+          <div class="product-details">
+            <h4><a href="">{{ProductName}}</a></h4>
+            <p>
+              {{ProductDesc}}
+            </p>
+            <hr>
+              <div class="product-price">{{ProductPrice}}</div>
+              <div class="product-links">
+                <a href="#">Add To Cart</i></a>
+          </div>
+          </div>
+        </div>
+  {{/if_equal}}
+{{/each}}
+    </div>
 
-  </section>
-</main>
+    <h2>AirPods Cases</h2>    
+    <div class="airpod-grid">
+    {{#each data}}
+      {{#if_equal ProductCategory "Airpods Case"}}
+        <div class="product-card">
+          <div class="product-img">
+            <img src="{{ProductImage}}" alt="" />
+          </div>
+          <div class="product-details">
+            <h4><a href="">{{ProductName}}</a></h4>
+            <p>
+              {{ProductDesc}}
+            </p>
+            <hr>
+              <div class="product-price">{{ProductPrice}}</div>
+              <div class="product-links">
+                <a href="#">Add To Cart</i></a>
+          </div>
+          </div>
+        </div>
+    {{/if_equal}}
+  {{/each}}
+    </div>
+
+</section>

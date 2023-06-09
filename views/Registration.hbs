@@ -1,0 +1,75 @@
+<div class="register-wrapper">
+  <h2 class="register-title">SIGN UP</h2>
+  <p class="register-form-description">Create an account for faster checkouts
+    and early access to sales!
+  </p>
+
+  <form action="/registration" method="post">
+    <div class="form-grid-container">
+      <div class="form-grid-items">
+        {{#if errMessage.first_name}}
+          <span class="form-error-msg">{{errMessage.first_name}}</span>
+        {{/if}}<br />
+        <label for="first_name">First Name</label>
+        <br />
+        <input
+          type="text"
+          name="first_name"
+          id="first_name"
+          value="{{values.first_name}}"
+        />
+      </div>
+      <div class="form-grid-items">
+        {{#if errMessage.last_name}}
+          <span class="form-error-msg">{{errMessage.last_name}}</span>
+        {{/if}}<br />
+        <label for="last_name">Last Name</label>
+        <br />
+        <input
+          type="text"
+          name="last_name"
+          id="last_name"
+          value="{{values.last_name}}"
+        />
+      </div>
+      <div class="form-grid-items">
+        {{#if errMessage.email}}
+          <span class="form-error-msg">{{errMessage.email}}</span>
+        {{/if}}<br />
+        <label for="email">Email </label>
+        <br />
+        <input type="email" name="email" id="email" value="{{values.email}}" />
+      </div>
+      <div class="form-grid-items">
+        {{#if errMessage.password}}
+          <span class="form-error-msg">{{errMessage.password}}</span>
+        {{/if}}<br />
+        <label for="password">Password </label>
+        <br />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          value="{{values.password}}"
+        />
+      </div>
+      <div class="form-grid-items">
+        {{#if errMessage.confirm_password}}
+          <span class="form-error-msg">{{errMessage.confirm_password}}</span>
+        {{/if}}<br />
+        <label for="confirm_password">Confirm Password</label>
+        <br />
+        <input
+          type="password"
+          name="confirm_password"
+          id="confirm_password"
+          value="{{values.confirm-password}}"
+        />
+      </div>
+      <div class="form-grid-items">
+        <button class="button" type="Submit">Create Account</button>
+      </div>
+    </div>
+  </form>
+
+</div>

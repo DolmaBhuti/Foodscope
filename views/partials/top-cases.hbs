@@ -1,72 +1,22 @@
 <h1>Hot Cases</h1>
     <section class="content-container">
-      <div class="product-card">
-        <div class="product-img">
-          <img src="images/PC26-09.jpg" alt="" />
+  {{#each this}}
+        <div class="product-card">
+          <div class="product-img">
+            <img src="{{ProductImage}}" alt="" />
+          </div>
+          <div class="product-details">
+            <h4><a href="">{{ProductName}}</a></h4>
+            <p>
+              {{ProductDesc}}
+            </p>
+            <hr>
+              <div class="product-price">{{ProductPrice}}</div>
+              <div class="product-links">
+                <a href="#">Add To Cart</i></a>
+          </div>
+          </div>
         </div>
-        <div class="product-details">
-          <h4><a href="">Marble Case Pink</a></h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero,
-            possimus nostrum!
-          </p>
-          <hr>
-            <div class="product-price">$19.99</div>
-            <div class="product-links">
-              <a href="">Add To Cart</i></a>
-            </div>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-img">
-          <img src="images/PC24-02.jpg" alt="" />
-        </div>
-        <div class="product-details">
-          <h4><a href="">Marble Case Pink</a></h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero,
-            possimus nostrum!
-          </p>
-          <hr>
-            <div class="product-price">$19.99</div>
-            <div class="product-links">
-              <a href="">Add To Cart</i></a>
-            </div>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-img">
-          <img src="images/PC26-07.jpg" alt="" />
-        </div>
-        <div class="product-details">
-          <h4><a href="">Marble Case Pink</a></h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero,
-            possimus nostrum!
-          </p>
-          <hr>
-            <div class="product-price">$19.99</div>
-            <div class="product-links">
-              <a href="">Add To Cart</i></a>
-            </div>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-img">
-          <img src="images/PC26-07.jpg" alt="" />
-        </div>
-        <div class="product-details">
-          <h4><a href="">Marble Case Pink</a></h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero,
-            possimus nostrum!
-          </p>
-          <hr>
-            <div class="product-price">$19.99</div>
-            <div class="product-links">
-              <a href="">Add To Cart</i></a>
-            </div>
-        </div>
-      </div>
+{{/each}}
 
     </section>

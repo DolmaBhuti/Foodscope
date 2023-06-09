@@ -1,12 +1,8 @@
+const express = require("express");
+const router = express.Router();
 const mongoose = require("mongoose");
-
 const Schema = mongoose.Schema;
 
-// • Cooking time – 25 minutes
-// • Servings – 2
-// • Calories Per Serving – 890
-// • Image URL – For now, point to an image placed in your static files folder.
-// • Is it a Top Meal? (Boolean) – true
 const productSchema = new Schema(
   {
     ProductName: {
@@ -40,13 +36,95 @@ const productSchema = new Schema(
   },
   { timestamps: true }
 );
-
+const Products = mongoose.model("Products", productSchema); //define a Mongoose model
 //javascript array
 var products = [
-  ["Name", 19.99],
-  ["Name", 19.99],
-  ["Name", 19.99],
-  ["Name", 19.99],
+  {
+    ProductName: "TRUE Marble Purple Case",
+    ProductMaterials: "Silicone, Polycarbonate",
+    ProductDesc: "iPhone 13 Pro Max",
+    ProductCategory: "iPhone Case",
+    ProductPrice: 10.99,
+    ProductImage: "images/PC26-07.jpg",
+    TopCase: true,
+  },
+  {
+    ProductName: "Marble Purple Case",
+    ProductMaterials: "Silicone, Polycarbonate",
+    ProductDesc: "iPhone 13 Pro Max",
+    ProductCategory: "iPhone Case",
+    ProductPrice: 10.99,
+    ProductImage: "images/PC26-07.jpg",
+    TopCase: true,
+  },
+  {
+    ProductName: "Marble Purple Case",
+    ProductMaterials: "Silicone, Polycarbonate",
+    ProductDesc: "iPhone 13 Pro Max",
+    ProductCategory: "iPhone Case",
+    ProductPrice: 10.99,
+    ProductImage: "images/PC26-07.jpg",
+    TopCase: true,
+  },
+  {
+    ProductName: "Marble Purple Case",
+    ProductMaterials: "Silicone,Polycarbonate",
+    ProductDesc: "AirPod Pro Case",
+    ProductCategory: "iPhone Case",
+    ProductPrice: 10.99,
+    ProductImage: "images/PC26-07.jpg",
+    TopCase: true,
+  },
+  {
+    ProductName: "Marble Purple Case",
+    ProductMaterials: "Silicone, Polycarbonate",
+    ProductDesc: "AirPod Pro Case",
+    ProductCategory: "Airpods Case",
+    ProductPrice: 10.99,
+    ProductImage: "images/PC26-07.jpg",
+    TopCase: false,
+  },
+  {
+    ProductName: "Marble Purple Case",
+    ProductMaterials: "Silicone, Polycarbonate",
+    ProductDesc: "AirPod Pro Case",
+    ProductCategory: "Airpods Case",
+    ProductPrice: 10.99,
+    ProductImage: "images/PC26-07.jpg",
+    TopCase: false,
+  },
+  {
+    ProductName: "Marble Purple Case",
+    ProductMaterials: "Silicone, Polycarbonate",
+    ProductDesc: "AirPod Pro Case",
+    ProductCategory: "Airpods Case",
+    ProductPrice: 10.99,
+    ProductImage: "images/PC26-07.jpg",
+    TopCase: false,
+  },
+  {
+    ProductName: "Marble Purple Case",
+    ProductMaterials: "Silicone,Polycarbonate",
+    ProductDesc: "AirPod Pro Case",
+    ProductCategory: "Airpods Case",
+    ProductPrice: 10.99,
+    ProductImage: "images/PC26-07.jpg",
+    TopCase: false,
+  },
 ];
+//get ALL products
+function getAllCases() {
+  return products;
+}
+//get all meal kits that is TopCase
+function getTopCases() {
+  let topCases = products.filter((el) => {
+    return el.TopCase == true;
+  });
+  return topCases;
+}
 
-module.exports = mongoose.model("Products", productSchema);
+module.exports = {
+  getAllCases,
+  getTopCases,
+};
