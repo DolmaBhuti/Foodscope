@@ -1,5 +1,12 @@
+const productsData = require("../models/ProductModel");
+
 getAllProducts = (req, res) => {
-  res.json({ msg: "get all product" });
+  console.log("Hello from shop products");
+
+  res.render("ShopProducts", {
+    title: "Products",
+    data: productsData.getAllCases,
+  });
 };
 getProduct = (req, res) => {
   res.json({ msg: "get single product" });

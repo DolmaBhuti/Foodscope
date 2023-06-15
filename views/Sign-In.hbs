@@ -3,7 +3,9 @@
 
   <form action="/login" method="POST">
     <div class="form-grid-container">
-
+      {{#if errMessage.invalid}}
+        <span class="form-error-msg">{{errMessage.invalid}}</span>
+      {{/if}}<br />
       <div class="form-grid-items">
 
         <label for="email">Email </label>
@@ -28,6 +30,19 @@
           value="{{values.password}}"
         />
       </div>
+      <div class="form-grid-items checkboxes">
+        <label class="form-control">
+          <input type="checkbox" id="clerk" name="role" value="true" />
+          Data Entry Clerk
+        </label>
+        <br />
+        <label class="form-control">
+          <input type="checkbox" id="customer" name="role" value="false" />
+          Customer
+        </label>
+
+      </div>
+
       <div class="form-grid-items">
         <button class="button" type="submit">Log In</button>
       </div>

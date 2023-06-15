@@ -256,7 +256,8 @@ footer .even-columns {
 .login-wrapper {
   width: 30%;
   margin: auto;
-  height: 100vh;
+  height: 100%;
+  margin-bottom: 5%;
   /* margin-left: 5%; */
 }
 .register-title,
@@ -292,6 +293,51 @@ footer .even-columns {
 .form-error-msg {
   color: red;
   font-size: smaller;
+}
+/*Checkbox */
+.form-control {
+  font-weight: bold;
+  line-height: 1.1;
+  display: grid;
+  grid-template-columns: 1em auto;
+  gap: 0.5em;
+}
+input[type="checkbox"] {
+  /* Step 1: Hide the Native Checkbox Input */
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  appearance: none;
+  /* For iOS < 15 to remove gradient background */
+  background-color: white;
+  /* Not removed via appearance */
+  margin: 0;
+  /* Step 2: Custom Unchecked Checkbox Styles */
+  font: inherit;
+  color: inherit;
+  width: 1.1em;
+  height: 1.1em;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+
+  display: grid;
+  place-content: center;
+}
+/*styled in order to represent the :checked state.*/
+input[type="checkbox"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--color-accent);
+  /* make the inner filled in state shaped as a checkmark */
+  transform-origin: bottom left;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+/* when the input is :checked, make it visible with scale(1) with a nicely animated result thanks to the transition */
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+  box-shadow: inset 1em 1em var(--color-accent);
 }
 /* Register Form Part Ends */
 
