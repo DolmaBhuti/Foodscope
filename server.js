@@ -4,6 +4,7 @@ const exphbs = require("express-handlebars");
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
+
 var HTTP_PORT = process.env.PORT;
 
 //express app
@@ -61,7 +62,6 @@ app.set("view engine", ".hbs");
  * Database config      *
  ************************/
 // Set up and connect to MongoDB
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
@@ -73,6 +73,7 @@ mongoose
   .catch((err) => {
     console.log(`There was a problem connecting to MongoDB ... ${err}`);
   });
+
 /************************
  * EMAIL CONFIGURATION  *
  ************************/
@@ -103,8 +104,7 @@ mongoose
 //routes -> controller -> model
 const productRoutes = require("./routes/productRoutes");
 const loginRoutes = require("./routes/loginRoutes");
-const loginController = require("./controllers/loginController");
-app.use("/api", productRoutes); //only fire the routes at a specific path
+app.use("/api/products/", productRoutes); //only fire the routes at a specific path
 app.use("/", loginRoutes);
 
 //listen for requests

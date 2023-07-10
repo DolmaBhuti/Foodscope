@@ -301,6 +301,7 @@ footer .even-columns {
   display: grid;
   grid-template-columns: 1em auto;
   gap: 0.5em;
+  margin-top: 0.5em;
 }
 input[type="checkbox"] {
   /* Step 1: Hide the Native Checkbox Input */

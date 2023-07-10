@@ -1,0 +1,70 @@
+<div class="form-wrapper">
+  <h2 class="form-title">Create New Product</h2>
+  <p class="form-description">Enter the details below.
+  </p>
+  <form
+    action="/api/products/create_product"
+    enctype="multipart/form-data"
+    method="POST"
+  >
+    <div class="form-grid-container">
+      <div class="form-grid-items">
+        {{#if errMessage.Product}}
+          <span class="form-error-msg">{{errMessage.ProductName}}</span>
+        {{/if}}<br />
+        <label for="first_name">Product Name</label>
+        <br />
+        <input
+          type="textProduct"
+          name="ProductName"
+          id="ProductName"
+          value="{{values.ProductName}}"
+        />
+      </div>
+      <div class="form-grid-items">
+        {{#if errMessage.ProductDesc}}
+          <span class="form-error-msg">{{errMessage.ProductDesc}}</span>
+        {{/if}}<br />
+        <label for="ProductDesc"> Description</label>
+        <br />
+        <input
+          type="text"
+          name="ProductDesc"
+          id="ProductDesc"
+          value="{{values.ProductDesc}}"
+        />
+      </div>
+      <div class="form-grid-items">
+        {{#if errMessage.ProductPrice}}
+          <span class="form-error-msg">{{errMessage.ProductPrice}}</span>
+        {{/if}}<br />
+        <label for="ProductPrice">Price </label>
+        <br />
+        <input
+          type="text"
+          name="ProductPrice"
+          id="ProductPrice"
+          value="{{values.ProductPrice}}"
+        />
+      </div>
+
+      <div class="form-grid-items">
+        {{#if errMessage.image}}
+          <span class="form-error-msg">{{errMessage.image}}</span>
+        {{/if}}<br />
+        <label for="testImage">Product Image</label>
+        <br />
+        <input
+          type="file"
+          id="testImage"
+          name="testImage"
+          accept="image/png, image/gif, image/jpeg"
+        />
+      </div>
+
+      <div class="form-grid-items">
+        <button class="button" type="submit">Add New Product</button>
+      </div>
+    </div>
+  </form>
+</div>

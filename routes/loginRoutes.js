@@ -4,7 +4,6 @@ const bcrypt = require("bcryptjs");
 const loginController = require("../controllers/loginController");
 const productController = require("../controllers/productsController");
 const User = require("../models/UserModel");
-const Product = require("../models/ProductModel");
 
 //set up express-validator: it performs both validation and sanitization of our form data
 const { body, validationResult } = require("express-validator");
@@ -17,7 +16,7 @@ router.get("/login", loginController.loginView);
 
 //home page
 router.get("/", (req, res) => {
-  res.render("index", { data: Product.getTopCases });
+  res.render("index", { data: productController.getTopCases });
 });
 router.get("/welcome", loginController.welcomeUser);
 
@@ -211,14 +210,14 @@ router.get("/logout", function (req, res) {
 router.get("/data_clerk", function (req, res) {
   if (req.session && req.session.user && req.session.user.isDataEntryClerk) {
     // res.redirect("load_data");
-    res.render("DataClerkDashboard", { data: req.session.user });
+    res.render("data_clerk/DataClerkDashboard", { data: req.session.user });
   }
 });
 
 // //customer dashboard
 router.get("/customer", function (req, res) {
   if (req.session && req.session.user && !req.session.user.isDataEntryClerk) {
-    res.render("CustomerDashboard", { data: req.session.user });
+    res.render("customer/CustomerDashboard", { data: req.session.user });
   }
 });
 

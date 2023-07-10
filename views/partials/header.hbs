@@ -1,16 +1,28 @@
 <header>
   <ul class="nav-list-container">
     <li class="header-item"><h1 class="header-logo">Jia's Shop</h1></li>
-    <li class="nav-item">
-      <a id="nav-products" href="/api">Shop Products</a>
-    </li>
+
     {{#if user}}
+
+      {{#if user.isDataEntryClerk}}
+        <li class="nav-item">
+          <a id="nav-products" href="/api/products/create_product">New Product</a>
+        </li>
+        <li class="nav-item">
+          <a id="nav-products" href="/api/products/products_list">Products</a>
+        </li>
+      {{/if}}
       <li class="nav-item"><a id="log-out" href="/logout">Log Out</a></li>
+
     {{else}}
+      <li class="nav-item">
+        <a id="nav-products" href="/api/products">Shop Products</a>
+      </li>
       <li class="nav-item"><a id="log-in" href="/login">Log In</a></li>
+      <li class="nav-item">
+        <a id="sign-up" href="/registration">Sign Up</a>
+      </li>
+
     {{/if}}
-    <li class="nav-item">
-      <a id="sign-up" href="/registration">Sign Up</a>
-    </li>
   </ul>
 </header>

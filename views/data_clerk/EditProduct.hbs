@@ -1,0 +1,76 @@
+<head>
+  <script src="/js/delete.js"> </script>
+  <script src="/js/edit.js"></script>
+</head>
+<div class="form-wrapper">
+  <h2 class="form-title">Edit Product: {{data.ProductPrice}}</h2>
+  {{data._id}}
+  <p class="form-description">Enter the details below.
+  </p>
+  <form
+    action="/api/products/edit_product/{{data._id}}"
+    enctype="multipart/form-data"
+    method="POST"
+    id="editForm"
+  >
+    <div class="form-grid-container">
+      <div class="form-grid-items">
+        {{#if errMessage.ProductName}}
+          <span class="form-error-msg">{{errMessage.ProductName}}</span>
+        {{/if}}<br />
+        <label for="first_name">Product Name</label>
+        <br />
+        <input
+          type="text"
+          name="ProductName"
+          id="ProductName"
+          value="{{data.ProductName}}"
+        />
+      </div>
+      <div class="form-grid-items">
+        {{#if errMessage.ProductDesc}}
+          <span class="form-error-msg">{{errMessage.ProductDesc}}</span>
+        {{/if}}<br />
+        <label for="ProductDesc"> Description</label>
+        <br />
+        <input
+          type="text"
+          name="ProductDesc"
+          id="ProductDesc"
+          value="{{data.ProductDesc}}"
+        />
+      </div>
+      <div class="form-grid-items">
+        {{#if errMessage.ProductPrice}}
+          <span class="form-error-msg">{{errMessage.ProductPrice}}</span>
+        {{/if}}<br />
+        <label for="ProductPrice">Price </label>
+        <br />
+        <input
+          type="text"
+          name="ProductPrice"
+          id="ProductPrice"
+          value="{{data.ProductPrice}}"
+        />
+      </div>
+
+      <div class="form-grid-items">
+        {{#if errMessage.image}}
+          <span class="form-error-msg">{{errMessage.image}}</span>
+        {{/if}}<br />
+        <label for="testImage">Product Image</label>
+        <br />
+        <input
+          type="file"
+          id="testImage"
+          name="testImage"
+          accept="image/png, image/gif, image/jpeg"
+        />
+      </div>
+
+      <div class="form-grid-items">
+        <button class="button" type="submit">Add New Product</button>
+      </div>
+    </div>
+  </form>
+</div>
