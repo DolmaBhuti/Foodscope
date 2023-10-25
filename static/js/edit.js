@@ -15,7 +15,8 @@ function editProduct(id) {
       console.error("Error deleting product: ", err);
     });
 }
-<form id="myForm">
+//{
+/* <form id="myForm">
   <input type="text" name="productName" id="productName" />
   <button type="submit">Update</button>
 </form>;
@@ -38,4 +39,4 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
     .catch((error) => {
       // Handle the error
     });
-});
+}); */

@@ -12,6 +12,7 @@ const productSchema = new Schema(
       required: true,
     },
     ProductPrice: {
+      //in cents
       type: Number,
       required: true,
     },

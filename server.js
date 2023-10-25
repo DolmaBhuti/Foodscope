@@ -22,6 +22,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    cookie: { secure: false }, //specifies the optionfor the session cookie (will create session middleware)
   })
 );
 app.use((req, res, next) => {
@@ -29,7 +30,10 @@ app.use((req, res, next) => {
   //every single handlesbars file can access that user variable
   // {{#if user}}
   //  Hello, {{user.firstName}}
+  res.locals.session = req.session;
   res.locals.user = req.session.user;
+  res.locals.cart = req.session.cart;
+  res.locals.cart_total = req.session.cart_total;
   next();
 });
 
@@ -52,6 +56,14 @@ app.engine(
     helpers: {
       if_equal: function (a, b, opts) {
         return a == b ? opts.fn(this) : opts.inverse(this);
+      },
+      if_cart: function (cart) {
+        if (cart.length > 0) {
+          req.session.cart_total = 0;
+          return true;
+        } else {
+          return false;
+        }
       },
     },
   })
@@ -104,10 +116,24 @@ mongoose
 //routes -> controller -> model
 const productRoutes = require("./routes/productRoutes");
 const loginRoutes = require("./routes/loginRoutes");
+const cartRoutes = require("./routes/cartRoutes");
 app.use("/api/products/", productRoutes); //only fire the routes at a specific path
 app.use("/", loginRoutes);
-
+app.use("/api/cart", cartRoutes);
 //listen for requests
 app.listen(HTTP_PORT, () => {
   console.log("Express http server listening on: " + HTTP_PORT);
 });
+
+/************************
+ * Set up Stripe        *
+ ************************/
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+/* 
+//stripe API call example
+const customer = await stripe.customers.create({
+  email: 'customer@example.com',
+  name: 'John Doe',
+});
+*/

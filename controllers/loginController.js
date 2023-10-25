@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
@@ -5,15 +7,15 @@ const mongoose = require("mongoose");
 const User = require("../models/UserModel");
 
 //For Register Page
-const registerView = (req, res) => {
+function registerView(req, res) {
   res.render("Registration", { title: "Register" });
   console.log("Hello from registration");
-};
+}
 // For View
-const loginView = (req, res) => {
+function loginView(req, res) {
   res.render("Sign-In", { title: "Sign In" });
   console.log("Hello from login");
-};
+}
 
 //welcome page for new user
 function welcomeUser(req, res) {

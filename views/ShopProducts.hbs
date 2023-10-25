@@ -1,23 +1,46 @@
+<head>
+  <script>
+    function calc_Total() { document.getElementById("demo").innerHTML =
+    "Paragraph changed."; }
+  </script>
+</head>
+
 <section class="products">
   <h2>iPhone Cases</h2>
   <div class="iphone-grid">
     {{#each data}}
       <div class="product-card">
-        <div class="product-img">
-          <img src="/{{filename}}" alt="Image" />
+        <a href="/api/products/product_description/{{_id}}">
 
-        </div>
-        <div class="product-details">
-          <h4><a href="">{{ProductName}}</a></h4>
-          <p>
-            {{ProductDesc}}
-          </p>
-          <hr />
-          <div class="product-price">{{ProductPrice}}</div>
-          <div class="product-links">
-            <a href="#">Add To Cart</a>
+          <div class="product-img">
+            <img src="/{{filename}}" alt="Image" />
+
           </div>
-        </div>
+          <div class="product-details">
+            <h4><a href="">{{ProductName}}</a></h4>
+            <p>
+              {{ProductDesc}}
+            </p>
+            <hr />
+            <div class="product-price">{{ProductPrice}}</div>
+            <div class="product-cart-form">
+              <form action="/api/products/shopping_cart/{{_id}}" method="post">
+                <input
+                  type="hidden"
+                  name="ProductName"
+                  value="{{ProductName}}"
+                />
+                <input
+                  type="hidden"
+                  name="ProductPrice"
+                  value="{{ProductPrice}}"
+                />
+                <input type="hidden" name="ProductId" value="{{_id}}" />
+                <input type="submit" class="button" value="Add To Cart" />
+              </form>
+            </div>
+          </div>
+        </a>
       </div>
     {{/each}}
   </div>

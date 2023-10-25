@@ -1,3 +1,5 @@
+"use strict";
+
 function deleteProduct(id) {
   console.log("In JS deleteProduct function");
   fetch(`delete_product/${id}`, {
@@ -10,10 +12,7 @@ function deleteProduct(id) {
         // Perform any additional actions or UI updates
         location.reload();
       } else {
-        //
         console.log("Error occurred while deleting the product");
-
-        // Handle the error and display an appropriate message
       }
     })
     .catch((err) => {

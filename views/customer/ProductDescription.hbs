@@ -1,0 +1,34 @@
+<head><style>
+    button{ padding:.5em; } .column-description{ padding-left: .5em;; }
+  </style>
+</head>
+<section class="product-flex-item">
+  {{#if data}}
+    <div class="small-product-container">
+      <div class="row">
+        <div class="column-image"><img src="/{{data.filename}}" alt="" /></div>
+        <div class="column-description">
+          <h1>
+            {{data.ProductName}}
+          </h1>
+          <h4>{{data.ProductPrice}}</h4>
+          <h5>{{data.ProductDesc}}</h5>
+          <form action="/api/products/shopping_cart/{{data._id}}" method="post">
+            <input
+              type="hidden"
+              name="ProductName"
+              value="{{data.ProductName}}"
+            />
+            <input
+              type="hidden"
+              name="ProductPrice"
+              value="{{data.ProductPrice}}"
+            />
+            <input type="hidden" name="ProductId" value="{{data._id}}" />
+            <input type="submit" class="button" value="Add To Cart" />
+          </form>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+</section>

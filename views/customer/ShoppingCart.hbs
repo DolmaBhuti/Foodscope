@@ -1,0 +1,52 @@
+<body>
+  <script src="../../static/js/cart.js"></script>
+
+  <section class="Cart-Body">
+    <div class="Cart-Container">
+      <div class="Cart-Header">
+        <h3 class="Cart-Heading">Shopping Cart</h3>
+        <h5 class="Action">Remove all</h5>
+      </div>
+
+      <div>
+        {{#if products}}
+          <form action="api/cart/create-checkout-session" method="POST">
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+              </tr>
+              {{#each products}}
+                <tr>
+                  <td>{{this.product.productId.name}}</td>
+                  <td>
+                    {{this.product.productId.price}}
+                  </td>
+                  <td>
+                    <button><i
+                        class="fa-solid fa-plus"
+                        id="plus-qty"
+                      ></i></button>
+                    {{this.product.quantity}}
+                    <button><i
+                        class="fa-solid fa-minus"
+                        id="minus-qty"
+                      ></i></button>
+                  </td>
+                  <td>{{this.product.total}}</td>
+                </tr>
+              {{/each}}
+            </table>
+            <div><strong>Sub Total: {{cart.subTotal}}</strong></div>
+            <button type="submit" id="checkout-button">Checkout</button>
+          </form>
+        {{else}}
+          <div><strong>No items in Cart</strong></div>
+
+        {{/if}}
+      </div>
+    </div>
+  </section>
+</body>

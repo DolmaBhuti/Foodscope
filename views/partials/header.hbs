@@ -1,9 +1,77 @@
-<header>
-  <ul class="nav-list-container">
-    <li class="header-item"><h1 class="header-logo">Jia's Shop</h1></li>
+<head>
+  <script
+    src="https://kit.fontawesome.com/2826552e9f.js"
+    crossorigin="anonymous"
+  ></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <style>
+    #cart-item-count{ margin-left: .4em; }
+  </style>
 
-    {{#if user}}
+</head>
 
+<header class="primary-header flex">
+  <div><h1 class="logo">Goodfood</h1></div>
+  <button
+    aria-controls="primary-navigation"
+    aria-expanded="false"
+    class="mobile-nav-toggle"
+  ><span>
+      <img src="/images/menu.svg" alt="hamburger menu icon" />
+    </span></button>
+  <nav>
+    <ul
+      id="primary-navigation"
+      class="primary-navigation flex"
+      data-visible="false"
+    >
+
+      <!--if user logged in -->
+      {{#if user}}
+
+        <!--if user logged in is data clerk-->
+        {{#if user.isDataEntryClerk}}
+          <li><a href="/api/products/create_product">New Product</a></li>
+          <li><a href="/api/products/products_list">Products</a></li>
+
+          <!--if user logged in is customer-->
+        {{else}}
+          <li><a href="/api/products">Shop</a></li>
+          {{! <li>Gift Cards</li> }}
+          <li>
+            <a href="/api/cart/shopping-cart">
+              <img src="/images/ShoppingCart.svg" alt="ShoppingCart icon" />
+            </a>
+
+            <!-- Item counter will be dynamically updated using JavaScript -->
+            <div class="item-counter" id="cart-item-count">
+              {{#if cart}}
+                <span>{{cart.totalQty}}</span>
+              {{else}}
+                <span>0</span>
+              {{/if}}
+            </div>
+          </li>
+        {{/if}}
+        <li><a id="log-out" href="/logout">Log Out</a></li>
+
+        <!--if no user logged in -->
+      {{else}}
+        <li><a href="/api/products">Shop</a></li>
+        <li><a href="/registration">Register</a></li>
+        <li><a href="/login">Log In</a></li>
+
+      {{/if}}
+    </ul>
+  </nav>
+
+  {{!-- <ul class="nav-list-container">
+    <li class="header-title"><h1 class="header-title-word">GoodFood</h1></li>
+
+      <!--if user logged in is data clerk-->
       {{#if user.isDataEntryClerk}}
         <li class="nav-item">
           <a id="nav-products" href="/api/products/create_product">New Product</a>
@@ -14,15 +82,18 @@
       {{/if}}
       <li class="nav-item"><a id="log-out" href="/logout">Log Out</a></li>
 
+      <!--if no user logged in -->
     {{else}}
       <li class="nav-item">
-        <a id="nav-products" href="/api/products">Shop Products</a>
+
       </li>
-      <li class="nav-item"><a id="log-in" href="/login">Log In</a></li>
+      <li class="nav-item"><a id="log-in" href="/login">Lo g In</a></li>
       <li class="nav-item">
         <a id="sign-up" href="/registration">Sign Up</a>
       </li>
-
+      <!-- Wrap the shopping cart icon and item counter in a container -->
+      
     {{/if}}
-  </ul>
+  </ul> --}}
 </header>
+<script src="/js/header.js"></script>

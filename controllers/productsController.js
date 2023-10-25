@@ -1,3 +1,5 @@
+"use strict";
+
 //javascript array
 var products = [
   {
@@ -76,41 +78,22 @@ var products = [
 const productsData = require("../models/ProductModel");
 const { body, validationResult } = require("express-validator");
 const Product = require("../models/ProductModel");
+const Cart = require("../models/CartModel");
 const mongoose = require("mongoose");
-
-//route controllers
-getAllProducts = (req, res) => {
-  Product.find({})
-    .lean()
-    .then((allData) => {
-      console.log("Success: get all products");
-
-      res.render("ShopProducts", {
-        title: "Products",
-        data: allData,
-      });
-    })
-    .catch((err) => {
-      console.log("Error getting all products: ", err);
-    });
-};
-getProduct = (req, res) => {
-  res.json({ msg: "get single product" });
-};
 
 /************************
  * Data Clerk Functions *
  ************************/
 
 //get products list
-getProductsList = (req, res) => {};
+function getProductsList(req, res) {}
 //post product view and form data
-postProductView = (req, res) => {
-  res.render("data_clerk/CreateProduct", {
+function postProductView(req, res) {
+  res.render("/data_clerk/CreateProduct", {
     title: "New Product",
   });
-};
-postProduct = (req, res) => {
+}
+function postProduct(req, res) {
   //error handle image upload
   const errors = validationResult(req);
   let errMessage = {};
@@ -173,21 +156,10 @@ postProduct = (req, res) => {
       values: req.body,
     });
   }
-};
-//Get all products
-function getProducts() {
-  Product.find({})
-    .lean()
-    .then((allData) => {
-      return allData;
-    })
-    .catch((err) => {
-      console.log("Error: getting all products: ", err);
-      return null;
-    });
 }
+
 //get all products for data clerk to edit
-getProductsList = (req, res) => {
+function getProductsList(req, res) {
   //TODO: get all products
   Product.find({})
     .lean()
@@ -199,8 +171,8 @@ getProductsList = (req, res) => {
     .catch((err) => {
       console.log("Error: getting all products: ", err);
     });
-};
-deleteProduct = (req, res) => {
+}
+function deleteProduct(req, res) {
   let errMessage = {};
 
   //TODO: delete product
@@ -213,8 +185,8 @@ deleteProduct = (req, res) => {
       errMessage.delete = "Could not delete product.  Try again later.";
     });
   res.end();
-};
-editProductView = (req, res) => {
+}
+function editProductView(req, res) {
   console.log("in edit view route");
 
   //TODO: get product with id
@@ -230,8 +202,8 @@ editProductView = (req, res) => {
     .catch((err) => {
       console.log("Error: getting product to edit: ", err);
     });
-};
-editProduct = (req, res) => {
+}
+function editProduct(req, res) {
   //error handle image upload
   const errors = validationResult(req);
   let errMessage = {};
@@ -300,22 +272,149 @@ editProduct = (req, res) => {
       data: req.body,
     });
   }
-};
+}
 /**********************
  * Customer Functions *
  **********************/
 //get image
-getImage = (req, res) => {
+function getImage(req, res) {
   Product.findById(req.params.id);
-};
-
-//get ALL products
-function getAllCases() {
-  //TODO: get all products
-  //TODO: render the ProductsListView.hbs with all the products sent in as data property
-
-  return products;
 }
+
+function getProduct(req, res) {
+  Product.findById(req.params.id)
+    .then((doc) => {
+      //create shopping cart in sessions
+      if (!req.session.cart) {
+        req.session.cart = [];
+      }
+      res.render("customer/ProductDescription", {
+        data: doc.toObject(),
+        title: doc.ProductName,
+        cart: req.session.cart,
+      });
+    })
+    .catch((err) => {});
+}
+
+//adding to shopping cart collection
+function addToShoppingCart(req, res) {
+  const productId = req.params.id;
+  const productName = req.body.ProductName;
+  const productPrice = req.body.ProductPrice;
+  let count = 0; //use to check if product exists already
+
+  //if the product already exists in the cart, just increment the quantity in the session AND database
+  for (let i = 0; i < req.session.cart.length; i++) {
+    if (req.session.cart[i].ProductId === productId) {
+      req.session.cart[i].Quantity += 1;
+      req.session.cart[i].ProductTotal += req.session.cart[i].ProductPrice;
+
+      count++;
+
+      //db.employees.updateOne({_id:1}, { $set: {firstName:'Morgan'}})
+      Cart.updateOne(
+        { ProductId: productId },
+        {
+          $set: {
+            Quantity: req.session.cart[i].Quantity,
+            ProductTotal: req.session.cart[i].ProductTotal,
+          },
+        }
+      )
+        .then((doc) => {
+          console.log("Cart: product quantity updated");
+        })
+        .catch((err) => {
+          console.log("Cart: product quantity unable to be updated: ", err);
+        });
+    }
+  }
+
+  //if the product does not exist, create a cart object and save it in the session and database
+  if (count == 0) {
+    const cart_object = {
+      ProductId: productId,
+      ProductName: productName,
+      ProductPrice: productPrice,
+      Quantity: 1,
+      ProductTotal: productPrice,
+    };
+    req.session.cart.push(cart_object);
+    console.log("Product saved to shopping cart session.");
+
+    //find product with id
+    Product.findById(productId)
+      .then((doc) => {
+        console.log("Add to shopping cart route: product found");
+
+        //add to shopping cart collection
+        let newProduct = new Cart({
+          ProductId: cart_object.ProductId,
+          ProductName: cart_object.ProductName,
+          ProductPrice: cart_object.ProductPrice,
+          Quantity: cart_object.Quantity,
+          ProductTotal: cart_object.ProductTotal,
+        });
+        newProduct
+          .save()
+          .then((doc) => {
+            console.log("Product saved to shopping cart database.");
+            //res.redirect(`../product_description/${req.params.id}`);
+          })
+          .catch((err) => {
+            console.log("Error saving new item into shopping cart ", err);
+          });
+      })
+      .catch();
+  }
+  res.redirect("/api/products");
+}
+
+//shopping cart view page
+function shoppingCart(req, res) {
+  let total_bill = 0;
+  Cart.find({})
+    .lean()
+    .then((data) => {
+      //Calculate total of all Product Totals
+      for (let i = 0; i < data.length; i++) {
+        total_bill += data[0].ProductTotal;
+      }
+      //render shopping cart page with all data passed in that was found
+      res.render("customer/ShoppingCart", {
+        title: "Shopping Cart",
+        cart: data,
+        total: total_bill,
+      });
+    });
+}
+//get ALL products
+//TODO: get all products
+//TODO: render the ProductsListView.hbs with all the products sent in as data property
+
+//route controllers
+function getAllProducts(req, res) {
+  Product.find({})
+    .lean()
+    .then((allData) => {
+      console.log("Success: get all products");
+
+      //create shopping cart in sessions
+      if (!req.session.cart) {
+        req.session.cart = [];
+      }
+      res.render("ShopProducts", {
+        title: "Products",
+        data: allData,
+        cart: req.session.cart,
+      });
+    })
+    .catch((err) => {
+      console.log("Error getting all products: ", err);
+    });
+}
+
 //get all meal kits that is TopCase
 function getTopCases() {
   let topCases = products.filter((el) => {
@@ -335,4 +434,12 @@ module.exports = {
   getTopCases,
   editProductView,
   editProduct,
+  shoppingCart,
 };
+
+// //get reference to checkout form
+// const form = document.getElementById("checkout-form");
+// const cardNumber = document.getElementById("card-number");
+// const cvcNumber = document.getElementById("cvc");
+// const expMonth = documet.getElementById("exp-month");
+// const expYear = documet.getElementById("exp-year");
