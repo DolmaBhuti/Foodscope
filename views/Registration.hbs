@@ -1,10 +1,98 @@
-<div class="register-wrapper">
-  <h2 class="register-title">SIGN UP</h2>
-  <p class="register-form-description">Create an account for faster checkouts
-    and early access to sales!
-  </p>
+<div class="form-container">
 
   <form action="/registration" method="post">
+    <h2 class="form-title">SIGN UP AND REGISTER</h2>
+
+    {{! first Name }}
+    <div class="user-details">
+      <div class="input-box">
+        {{#if errMessage.first_name}}
+          <span class="form-error-msg">{{errMessage.first_name}}</span>
+        {{/if}}<br />
+
+        <label class="details" for="first_name">First Name</label>
+        <input
+          type="text"
+          placeholder="Enter First Name"
+          id="first_name"
+          name="first_name"
+          required
+          value="{{values.first_name}}"
+        />
+      </div>
+      {{!last Name }}
+      <div class="input-box">
+        {{#if errMessage.last_name}}
+          <span class="form-error-msg">{{errMessage.last_name}}</span>
+        {{/if}}<br />
+        <label class="details" for="last_name">Last Name</label>
+        <input
+          type="text"
+          placeholder="Enter your last name"
+          id="last_name"
+          name="last_name"
+          required
+          value="{{values.last_name}}"
+        />
+      </div>
+      {{!email address }}
+      <div class="input-box register-email">
+        {{#if errMessage.email}}
+          <span class="form-error-msg">{{errMessage.email}}</span>
+        {{/if}}<br />
+        <label class="details" for="email">Email</label>
+        <input
+          type="email"
+          placeholder="Enter your email"
+          id="email"
+          name="email"
+          required
+          value="{{values.email}}"
+        />
+      </div>
+      {{! password}}
+      <div class="input-box">
+        {{#if errMessage.password}}
+          <span class="form-error-msg">{{errMessage.password}}</span>
+        {{/if}}<br />
+        <label class="details" for="password">Password</label>
+        <input
+          type="text"
+          placeholder="Enter Password"
+          id="password"
+          name="password"
+          required
+          value="{{values.password}}"
+        />
+      </div>
+      {{! confirm password }}
+
+      <div class="input-box">
+        {{#if errMessage.confirm_password}}
+          <span class="form-error-msg">{{errMessage.confirm_password}}</span>
+        {{/if}}<br />
+        <label class="details" for="confirm_password">Confirm Password</label>
+        <input
+          type="text"
+          placeholder="Enter"
+          id="confirm_password"
+          name="confirm_password"
+          required
+        />
+      </div>
+
+    </div>
+    <div class="button">
+      <button type="submit">Add to Cart</button>
+    </div>
+  </form>
+</div>
+{{! <div class="input-box">
+        <label class="details" for=""></label>
+        <input type="text" placeholder="" id="" name="" required />
+      </div> }}
+
+{{!-- <form action="/registration" method="post">
     <div class="form-grid-container">
       <div class="form-grid-items">
         {{#if errMessage.first_name}}
@@ -66,23 +154,10 @@
           value="{{values.confirm-password}}"
         />
       </div>
-      <div class="form-grid-items checkboxes">
-        <label class="form-control">
-          <input type="checkbox" id="clerk" name="role" value="true" />
-          Data Entry Clerk
-        </label>
-        <br />
-        <label class="form-control">
-          <input type="checkbox" id="customer" name="role" value="false" />
-          Customer
-        </label>
-
-      </div>
 
       <div class="form-grid-items">
         <button class="button" type="Submit">Create Account</button>
       </div>
     </div>
   </form>
-
-</div>
+ --}}

@@ -1,31 +1,35 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500&display=swap");
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 :root {
-  --color-dominant: #041c32;
-  --color-main: #f4f3f2;
+  --color-dominant: #333333;
+  --color-main: #fefefe;
   --color-accent: #dda01d;
+  --color-green: #00838d;
+  --color-input-border: #ccc;
+  --color-product-card: #f8f8f8;
 }
+
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: var(--color-main);
   color: var(--color-dominant);
 
   overflow-x: hidden;
-}
-/* a {
-  text-decoration: none;
-  font-size: 18px;
-  color: inherit;
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-li {
-  list-style: none;
-} */
+main {
+  padding-bottom: 2rem;
+  min-height: 80vh;
+}
 ul {
   list-style: none;
 }
@@ -33,7 +37,9 @@ button,
 .button {
   border: none;
 }
-
+a {
+  text-decoration: none;
+}
 /* general */
 .flex {
   display: flex;
@@ -46,6 +52,10 @@ button,
 }
 
 /* primary header */
+.primary-header a {
+  text-decoration: none;
+  color: var(--color-dominant);
+}
 .logo {
   margin: 2rem;
 }
@@ -112,8 +122,9 @@ button,
 
 /* FOOTER  */
 footer {
-  background-color: var(--color-dominant);
+  background-color: black;
   color: var(--color-main);
+  margin-top: 2rem;
 }
 .footer-container {
   margin: auto;
@@ -168,229 +179,513 @@ ul[aria-label="Social links"] a {
   }
 }
 
-/* HERO PART */
-.hero-container {
-  height: 70vh;
-  width: 80%;
-  margin: auto;
+/* HERO  */
+
+.hero {
+  width: 100%;
+  min-height: 60;
+  padding: 1rem 1rem;
+  background-color: #f2eee1;
+
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
-.hero-container > div {
-  height: 80%;
-  color: var(--color-dark);
-}
-.hero-text-item {
-  width: 43%;
+.hero-container {
+  width: 45%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 15px;
-}
-.hero-img-item {
-  width: 54%;
-}
-.hero-main-text {
-  font-size: 48px;
-  font-weight: bolder;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-.hero-sec-text {
-  font-size: 18px;
-}
-.hero-btn {
-  background-color: #3882f6;
-  color: #f9faf8;
-  border: #3882f6;
-  font-size: 18px;
-  font-weight: bold;
-  width: 120px;
-  height: 30px;
-  border-radius: 5px;
-}
-.hero-img-item > img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 5%;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
-/* CONTENT PART */
+.hero-container-3 {
+  width: 45%;
+  max-height: 80%;
+}
+.hero-container-3 img {
+  margin: auto;
+  width: 95%;
+  object-fit: contain;
+  border-radius: 20px;
+  /* border-radius: 50%; */
+}
+.hero-video-link {
+  color: var(--color-green);
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.hero-register-button {
+  width: 40%;
+  height: 2.4rem;
+  font-size: 1.1rem;
+  font-weight: 900;
+  background-color: var(--color-green);
+  color: var(--color-main);
+  border-radius: 100px 100px / 120px;
+}
+/* First paragraph */
+.hero-column2 p:nth-of-type(1) {
+  font-weight: 700;
+}
+.hero-column2 p {
+  padding-top: 1rem;
+}
+.how-it-works {
+  font-size: 1.7rem;
+  font-weight: 800;
+  text-align: center;
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+}
+.hero-container-2 {
+  width: 80%;
+  height: 50%;
+  margin: auto;
+  padding-bottom: 6rem;
+
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.hero-column2 {
+  width: 80%;
+  height: 90%;
+  text-align: center;
+}
+.hero-column2 div {
+  width: 100%;
+}
+.hero-column2 img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+/* Product card (landing page AND products page)ß*/
+
+.content h1 {
+  font-size: 1.7rem;
+  font-weight: 800;
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
 .content-container {
   width: 80%;
+  height: 50vh;
   margin: auto;
-  display: grid;
-  align-items: center; /* centers column within a column */
-  justify-items: center; /* centers column within a column */
-  grid-template-columns: repeat(4, 0.5fr);
+  padding-bottom: 6rem;
 
-  /*shorthand:  rows defined before the slash, columns after*/
-  /* grid-template: 50px 50px /  50px 50px;  */
-  /* column-gap: 10px;
-row-gap: 100px; */
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
 }
 .product-card {
-  /* 
-box-shadow:0px 0px 6px#343a40; */
-  width: 95%;
-  box-shadow: 0 2px 7px var(--color-main);
-  margin: 50px auto;
-  background: var(--color-main);
-  padding-bottom: 3rem;
+  width: 80%;
+  height: 100%;
+
+  text-align: left;
+  background-color: var(--color-product-card);
 }
 .product-card img {
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 300px;
   object-fit: cover;
 }
-.product-details {
-  padding: 30px;
-}
-.product-details h4 a {
-  font-weight: 500;
-  display: block;
-  margin-bottom: 18px;
-  text-transform: uppercase;
-  color: var(--color-dominant);
+.content-container a,
+.main-content-container a {
   text-decoration: none;
-  transition: 0.3s;
+  color: var(--color-dominant);
 }
-.product-details h4 a:hover {
+.content-container a:hover,
+.main-content-container a:hover {
   color: var(--color-accent);
+}
+.product-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+
+  height: 55%;
+}
+.product-description > div {
+  font-size: small;
+  width: 100%;
+}
+.product-details {
+  height: 75%;
 }
 .product-links {
-  text-align: right;
+  height: 25%;
+  border: #00838d 2px solid;
 }
-.product-links a {
-  float: right;
-  margin-left: 5px;
-  color: var(--color-dominant);
-  transition: 0.3s;
-  font-size: 17px;
-  padding-top: 20px;
-  font-size: 18px;
-  font-weight: 600;
-}
-.product-links a:hover {
-  color: var(--color-accent);
+.product-links button {
+  font-style: inherit;
+  background-color: #f8f8f8;
 }
 
-.product-price {
-  float: left;
-  padding-top: 20px;
+/* Media Query for Mobile Devices */
+@media (max-width: 480px) {
+  .hero-container {
+    width: 85%;
+    margin: auto;
+  }
+  .hero-container-2 {
+    width: 90%;
+    margin: auto;
+    padding-top: 2rem;
 
-  font-size: 18px;
-  color: var(--color-accent);
-  font-weight: 600;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .hero-column h1 {
+    font-size: 1.7rem;
+    font-weight: 800;
+  }
+  .hero-column p {
+    font-weight: 400;
+  }
+  .hero-register-button {
+    width: 100%;
+  }
+
+  .hero-column2 img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .hero-container-3,
+  .hero-container-3 img {
+    display: none;
+  }
+  .content-container {
+    width: 90%;
+    margin: auto;
+    padding-top: 2rem;
+
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
 }
 
-/* PRODUCTS PAGE*/
+/* Media Query for low resolution  Tablets, Ipads */
+/* Media Query for Tablets Ipads portrait mode */
+@media (min-width: 481px) and (max-width: 1024px) {
+  .hero-container-2 {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .hero-column2 {
+    flex: 1 1 300px;
+  }
 
-.iphone-grid,
-.airpod-grid {
-  width: 80%;
-  margin: auto;
-  display: grid;
-  align-items: center; /* centers column within a column */
-  justify-items: center; /* centers column within a column */
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  .content-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .product-card {
+    flex: 1 1 300px;
+  }
+  #login-form form {
+    width: 100%;
+  }
 }
 
 /* Register Form  */
-.register-wrapper,
-.login-wrapper {
-  width: 30%;
-  margin: auto;
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+.form-container form {
+  width: 50%;
+  padding: 2rem;
+  border-radius: 5px;
+  background-color: var(--color-main);
+  border: var(--color-input-border) solid 2px;
+}
+form .user-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+form .user-details .input-box {
+  width: 47%;
+}
+.register-email {
+  flex-basis: 100%;
+}
+.user-details .input-box .details {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.user-details .input-box input {
+  height: 45px;
+  width: 100%;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid var(--color-input-border);
+  padding-left: 5px;
+  border-bottom-width: 2px;
+}
+.user-details .input-box input:focus {
+  border-color: var(--color-accent);
+}
+.form-title {
+  font-weight: 500;
+}
+
+form .button {
+  height: 40px;
+  width: 100%;
+}
+form .button button {
+  width: 100%;
   height: 100%;
-  margin-bottom: 5%;
-  /* margin-left: 5%; */
+  margin-top: 12px;
+  border: none;
+  background-color: var(--color-green);
+  color: var(--color-main);
+  font-weight: 500;
+  font-size: large;
+  border-radius: 5px;
+  letter-spacing: 1px;
 }
-.register-title,
-.login-title {
-  margin: 1rem 0rem;
+#login-form form {
+  width: 40%;
 }
-.register-form-description {
-  margin-bottom: 2rem;
+#login-form form .user-details {
+  flex-direction: column;
 }
-.form-grid-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-}
-.form-grid-items input {
+#login-form form .user-details .input-box {
   width: 100%;
-  height: 2rem;
-  margin-top: 0.5rem;
-  border: var(--color-main) 2px solid;
 }
-.form-grid-items label {
-  font-weight: bold;
+@media (max-width: 480px) {
+  .form-container form {
+    width: 100%;
+  }
 }
-.form-grid-items input:focus {
-  border: var(--color-dominant) 2px solid;
+
+/* Media Query for tablet Devices */
+@media (max-width: 760px) {
+  .form-container {
+    height: 100%;
+  }
+
+  form .user-details {
+    flex-direction: column;
+    align-items: center;
+  }
+  form .user-details .input-box {
+    width: 90%;
+  }
+  #login-form form {
+    width: 100%;
+  }
 }
-.button {
-  width: 100%;
-  height: 3rem;
-  font-weight: bold;
-  font-size: 1rem;
+@media (min-width: 761px) and (max-width: 1024px) {
+  #login-form form {
+    width: 70%;
+  }
+}
+/* Media Query for Laptops and Desktops */
+@media (min-width: 1025px) and (max-width: 1436px) {
+  .form-container form {
+    width: 50%;
+  }
+  form .user-details {
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 .form-error-msg {
   color: red;
   font-size: smaller;
 }
-/*Checkbox */
-.form-control {
-  font-weight: bold;
-  line-height: 1.1;
+/* PRODUCTS PAGE*/
+.main-content-container {
+  width: 80%;
+  margin: auto;
   display: grid;
-  grid-template-columns: 1em auto;
-  gap: 0.5em;
-  margin-top: 0.5em;
-}
-input[type="checkbox"] {
-  /* Step 1: Hide the Native Checkbox Input */
-  /* Add if not using autoprefixer */
-  -webkit-appearance: none;
-  appearance: none;
-  /* For iOS < 15 to remove gradient background */
-  background-color: white;
-  /* Not removed via appearance */
-  margin: 0;
-  /* Step 2: Custom Unchecked Checkbox Styles */
-  font: inherit;
-  color: inherit;
-  width: 1.1em;
-  height: 1.1em;
-  border-radius: 0.15em;
-  transform: translateY(-0.075em);
+  gap: 1rem;
 
-  display: grid;
-  place-content: center;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
 }
-/*styled in order to represent the :checked state.*/
-input[type="checkbox"]::before {
-  content: "";
-  width: 0.65em;
-  height: 0.65em;
-  transform: scale(0);
-  transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em var(--color-accent);
-  /* make the inner filled in state shaped as a checkmark */
-  transform-origin: bottom left;
-  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-}
-/* when the input is :checked, make it visible with scale(1) with a nicely animated result thanks to the transition */
-input[type="checkbox"]:checked::before {
-  transform: scale(1);
-  box-shadow: inset 1em 1em var(--color-accent);
-}
-/* Register Form Part Ends */
+.main-product-card {
+  height: 100%;
 
+  text-align: left;
+}
+.main-product-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+.main-product-description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+
+  height: 30%;
+  /* background-color: #00838d; */
+
+  background-color: var(--color-product-card);
+}
+.main-product-description > div {
+  font-size: small;
+  width: 100%;
+}
+.main-product-details {
+  height: 74%;
+}
+.main-product-links {
+  height: 29%;
+}
+
+.content h2 {
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+/* 
+.product-page-container {
+  width: 80%;
+  margin: auto;
+  padding-bottom: 6rem;
+/* 
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1rem;
+  border: #00838d solid 2px;
+}
+
+
+.product-tile .product-description {
+  border: #00838d solid 2px;
+}
+.product-tile .product-description .product-details {
+}
+.product-tile .product-description .product-links {
+} */
+
+/* edit form*/
+
+.edit-form-container > form,
+.create-form-container > form {
+  margin-top: 10%;
+}
+
+/* tables (data clerk dashboard and shopping cart*/
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  border: 3px solid purple;
+}
+.clerk-table-container {
+  width: 80%;
+  margin: auto;
+  font-size: 0.8rem;
+}
+th,
+td {
+  padding: 20px;
+  text-align: left;
+}
+thead th:nth-child(1) {
+  width: 11%;
+}
+
+thead th:nth-child(2) {
+  width: 20%;
+}
+
+thead th:nth-child(3) {
+  width: 20%;
+}
+
+thead th:nth-child(4) {
+  width: 8%;
+}
+thead th:nth-child(5) {
+  width: 8%;
+}
+thead th:nth-child(6) {
+  width: 8%;
+}
+thead th:nth-child(7) {
+  width: 15%;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: var(--color-input-border);
+}
+
+tbody tr:nth-child(even) {
+  background-color: var(var(--color-main));
+}
+.clerk-action {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.clerk-action button {
+  background-color: var(--color-green);
+  height: 2rem;
+}
+
+.clerk-action button a {
+  color: var(--color-main);
+}
+/* 
+.products-list-table {
+  border-top: 2px solid black;
+}
+.table-header {
+  text-align: left;
+}
+table tr td {
+  min-width: 4rem;
+}
+
+.products-list-item img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+} */
+/* .item-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+} */
 /*Product Description Page */
 
 .small-product-container {
@@ -415,7 +710,7 @@ input[type="checkbox"]:checked::before {
 }
 
 /* Shopping Cart Page */
-.Cart-Body {
+/* .Cart-Body {
   margin: 0;
   padding: 0;
   background: linear-gradient(to bottom right, #e3f0ff, #fafcff);
@@ -442,7 +737,7 @@ input[type="checkbox"]:checked::before {
 }
 .Cart-Heading {
   font-size: 20px;
-}
+} */
 @media all and (max-width: 920px) {
   .nav-list-container {
     flex-wrap: wrap;

@@ -1,52 +1,49 @@
-<body>
-  <script src="../../static/js/cart.js"></script>
-
-  <section class="Cart-Body">
-    <div class="Cart-Container">
-      <div class="Cart-Header">
-        <h3 class="Cart-Heading">Shopping Cart</h3>
-        <h5 class="Action">Remove all</h5>
-      </div>
-
-      <div>
-        {{#if products}}
-          <form action="api/cart/create-checkout-session" method="POST">
-            <table>
-              <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total Price</th>
-              </tr>
-              {{#each products}}
-                <tr>
-                  <td>{{this.product.productId.name}}</td>
-                  <td>
-                    {{this.product.productId.price}}
-                  </td>
-                  <td>
-                    <button><i
-                        class="fa-solid fa-plus"
-                        id="plus-qty"
-                      ></i></button>
-                    {{this.product.quantity}}
-                    <button><i
-                        class="fa-solid fa-minus"
-                        id="minus-qty"
-                      ></i></button>
-                  </td>
-                  <td>{{this.product.total}}</td>
-                </tr>
-              {{/each}}
-            </table>
-            <div><strong>Sub Total: {{cart.subTotal}}</strong></div>
-            <button type="submit" id="checkout-button">Checkout</button>
-          </form>
-        {{else}}
-          <div><strong>No items in Cart</strong></div>
-
-        {{/if}}
-      </div>
+<section class="cart">
+  <div class="cart-container">
+    <div class="cart-header">
+      <h3>Shopping Cart</h3>
+      <h5><a href="/api/cart/empty-cart">Remove all</a></h5>
     </div>
-  </section>
-</body>
+    <div class="cart-table-container">
+      {{#if products}}
+        <table class="cart-list-table">
+          <tr class="cart-list-header table-header">
+            <th></th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+          </tr>
+          {{#each products}}
+            <tr class="cart-list-item table-data">
+              <img src="/images/{{filename}}" />
+
+              <td>{{ProductName}}</td>
+              <td>
+                {{ProductPrice}}
+              </td>
+              <td>
+                <a href="/api/cart/add-item-quantity/{{_id}}">
+                  <i class="fa-solid fa-plus"></i>
+                </a>
+
+                {{quantity}}
+
+                <a href="/api/cart/subtract-item-quantity/{{_id}}">
+                  <i class="fa-solid fa-minus"></i>
+                </a>
+              </td>
+              <td>{{total}}</td>
+              <td><a href="/api/cart/remove-item/{{_id}}">X</a></td>
+            </tr>
+          {{/each}}
+        </table>
+        <div><strong>Sub Total: {{subTotal}}</strong></div>
+        <a href="/api/cart/checkout">Checkout</a>
+      {{else}}
+        <div>No items in cart</div>
+
+      {{/if}}
+    </div>
+  </div>
+</section>

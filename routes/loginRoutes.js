@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router(); //invoke that.  this creates an instance of the router
 const bcrypt = require("bcryptjs");
+
+const mongoose = require("mongoose");
 const loginController = require("../controllers/loginController");
 const productController = require("../controllers/productsController");
 const User = require("../models/UserModel");
+const Product = require("../models/ProductModel");
 
 //set up express-validator: it performs both validation and sanitization of our form data
 const { body, validationResult } = require("express-validator");
@@ -16,8 +19,17 @@ router.get("/login", loginController.loginView);
 
 //home page
 router.get("/", (req, res) => {
-  res.render("index", { data: productController.getTopCases });
+  Product.find({ featured: true })
+    .lean()
+    .then((products) => {
+      if (products) {
+        res.render("index", {
+          data: products,
+        });
+      }
+    });
 });
+
 router.get("/welcome", loginController.welcomeUser);
 
 //registration form post
@@ -153,12 +165,11 @@ router.post(
       //password: 9&#kWLa%48k
       User.findOne({
         Email: req.body.email,
-        isDataEntryClerk: req.body.role,
       })
-        .then((data) => {
-          bcrypt.compare(
+        .then(async (user) => {
+          await bcrypt.compare(
             req.body.password,
-            data.Password,
+            user.Password,
             function (err, result) {
               if (err) {
                 errMessage.invalid =
@@ -168,28 +179,39 @@ router.post(
                   errMessage: errMessage,
                   values: req.body,
                 });
-              } else {
+              }
+              if (result) {
                 // Add the user on the session and redirect them to the dashboard page.
                 //create a new session for logged in user document returned by MongoDB
-                req.session.user = data;
-                console.log("Login successful: ", req.session.user);
+
+                user.password = "";
+
+                req.session.user = user;
+                //console.log("Login successful: ", req.session.user);
 
                 //if data clerk, redirect to data clerk dashboard
-                if (data.isDataEntryClerk) {
+                if (user && user.isDataEntryClerk) {
                   res.redirect("/data_clerk");
                 } else {
-                  //else, redirect to customer dashboard
-                  res.redirect("/customer");
+                  //else, redirect to shop
+                  res.redirect("/api/products");
                 }
                 // return next();
+              } else {
+                errMessage.invalid =
+                  "Sorry, your passwords don't match.  Please try again.";
+                res.render("Sign-In", {
+                  title: "Sign In",
+                  errMessage: errMessage,
+                  values: req.body,
+                });
               }
             }
           );
         })
         .catch((err) => {
           res.status(500);
-          errMessage.invalid =
-            "Sorry, your email and/or role is wrong.  Please try again.";
+          errMessage.invalid = "Sorry, your email is wrong.  Please try again.";
           res.render("Sign-In", {
             title: "Sign In",
             errMessage: errMessage,
@@ -199,7 +221,6 @@ router.post(
         });
     }
   }
-  // productController.getAllProducts
 );
 
 router.get("/logout", function (req, res) {
@@ -208,16 +229,44 @@ router.get("/logout", function (req, res) {
 });
 // //data clerk dashboard
 router.get("/data_clerk", function (req, res) {
-  if (req.session && req.session.user && req.session.user.isDataEntryClerk) {
+  const user = req.session.user;
+  if (user && user.isDataEntryClerk) {
     // res.redirect("load_data");
-    res.render("data_clerk/DataClerkDashboard", { data: req.session.user });
+    //find all products
+    Product.find({})
+      .lean()
+      .exec()
+      .then((products) => {
+        if (products) {
+          res.render("DataClerkDashboard", {
+            current_user: user,
+            data: products,
+          });
+        } else {
+          res.render("DataClerkDashboard", {
+            current_user: user,
+            data: [],
+          });
+        }
+      })
+      .catch((err) => {
+        console.error(
+          "Error in getting the product list for data clerk dashboard",
+          err
+        );
+      });
   }
 });
 
 // //customer dashboard
 router.get("/customer", function (req, res) {
-  if (req.session && req.session.user && !req.session.user.isDataEntryClerk) {
-    res.render("customer/CustomerDashboard", { data: req.session.user });
+  const user = req.session.user;
+
+  if (user && !user.isDataEntryClerk) {
+    res.render("CustomerDashboard", {
+      current_user: user,
+      title: `${user.FirstName} ${user.LastName}`,
+    });
   }
 });
 

@@ -5,43 +5,161 @@
   </script>
 </head>
 
-<section class="products">
-  <h2>iPhone Cases</h2>
-  <div class="iphone-grid">
+<section class="content">
+  <h1>All the recipes for this week</h1>
+
+  <h2>Lunch</h2>
+  <div class="main-content-container">
     {{#each data}}
-      <div class="product-card">
-        <a href="/api/products/product_description/{{_id}}">
+      {{#if_equal ProductCategory "Lunch"}}
+        <div class="main-product-card">
+          <a href="/api/products/product_description/{{_id}}">
 
-          <div class="product-img">
-            <img src="/{{filename}}" alt="Image" />
+            {{! <div class="product-img"> }}
+            <img src="/images/{{filename}}" alt="Product Image" />
+            {{! </div> }}
+            <div class="main-product-description">
+              <div class="main-product-details">
+                <h4>{{ProductName}}</h4>
+                <p>
+                  {{ProductDesc}}
+                </p>
+              </div>
 
-          </div>
-          <div class="product-details">
-            <h4><a href="">{{ProductName}}</a></h4>
-            <p>
-              {{ProductDesc}}
-            </p>
-            <hr />
-            <div class="product-price">{{ProductPrice}}</div>
-            <div class="product-cart-form">
-              <form action="/api/products/shopping_cart/{{_id}}" method="post">
-                <input
-                  type="hidden"
-                  name="ProductName"
-                  value="{{ProductName}}"
-                />
-                <input
-                  type="hidden"
-                  name="ProductPrice"
-                  value="{{ProductPrice}}"
-                />
-                <input type="hidden" name="ProductId" value="{{_id}}" />
-                <input type="submit" class="button" value="Add To Cart" />
-              </form>
+              <div class="main-product-links">
+                <div class="main-product-price">{{ProductPrice}}</div>
+
+                <form action="/api/cart/add-item-to-cart/{{_id}}" method="post">
+                  <input
+                    type="hidden"
+                    name="quantity"
+                    id="quantity"
+                    value="1"
+                  />
+                  <button type="submit">Add To Cart</button>
+                </form>
+              </div>
             </div>
-          </div>
-        </a>
-      </div>
+          </a>
+
+        </div>
+      {{/if_equal}}
+    {{/each}}
+  </div>
+
+  <h2>Dinner</h2>
+  <div class="main-content-container">
+    {{#each data}}
+      {{#if_equal ProductCategory "Dinner"}}
+        <div class="main-product-card">
+          <a href="/api/products/product_description/{{_id}}">
+
+            {{! <div class="product-img"> }}
+            <img src="/images/{{filename}}" alt="Product Image" />
+            {{! </div> }}
+            <div class="main-product-description">
+              <div class="main-product-details">
+                <h4>{{ProductName}}</h4>
+                <p>
+                  {{ProductDesc}}
+                </p>
+              </div>
+
+              <div class="main-product-links">
+                <div class="main-product-price">{{ProductPrice}}</div>
+
+                <form action="/api/cart/add-item-to-cart/{{_id}}" method="post">
+                  <input
+                    type="hidden"
+                    name="quantity"
+                    id="quantity"
+                    value="1"
+                  />
+                  <button type="submit">Add To Cart</button>
+                </form>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      {{/if_equal}}
+    {{/each}}
+  </div>
+  <h2>Breakfast</h2>
+
+  <div class="main-content-container">
+    {{#each data}}
+      {{#if_equal ProductCategory "Breakfast"}}
+        <div class="main-product-card">
+          <a href="/api/products/product_description/{{_id}}">
+
+            {{! <div class="product-img"> }}
+            <img src="/images/{{filename}}" alt="Product Image" />
+            {{! </div> }}
+            <div class="main-product-description">
+              <div class="main-product-details">
+                <h4>{{ProductName}}</h4>
+                <p>
+                  {{ProductDesc}}
+                </p>
+              </div>
+
+              <div class="main-product-links">
+                <div class="main-product-price">{{ProductPrice}}</div>
+
+                <form action="/api/cart/add-item-to-cart/{{_id}}" method="post">
+                  <input
+                    type="hidden"
+                    name="quantity"
+                    id="quantity"
+                    value="1"
+                  />
+                  <button type="submit">Add To Cart</button>
+                </form>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      {{/if_equal}}
+    {{/each}}
+  </div>
+  <h2>Salad</h2>
+
+  <div class="main-content-container">
+    {{#each data}}
+      {{#if_equal ProductCategory "Salad"}}
+        <div class="main-product-card">
+          <a href="/api/products/product_description/{{_id}}">
+
+            {{! <div class="product-img"> }}
+            <img src="/images/{{filename}}" alt="Product Image" />
+            {{! </div> }}
+            <div class="main-product-description">
+              <div class="main-product-details">
+                <h4>{{ProductName}}</h4>
+                <p>
+                  {{ProductDesc}}
+                </p>
+              </div>
+
+              <div class="main-product-links">
+                <div class="main-product-price">{{ProductPrice}}</div>
+
+                <form action="/api/cart/add-item-to-cart/{{_id}}" method="post">
+                  <input
+                    type="hidden"
+                    name="quantity"
+                    id="quantity"
+                    value="1"
+                  />
+                  <button type="submit">Add To Cart</button>
+                </form>
+              </div>
+            </div>
+          </a>
+        </div>
+      {{/if_equal}}
     {{/each}}
   </div>
 </section>

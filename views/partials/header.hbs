@@ -10,11 +10,11 @@
   <style>
     #cart-item-count{ margin-left: .4em; }
   </style>
-
+  <script src="/js/modal-forms.js"></script>
 </head>
 
 <header class="primary-header flex">
-  <div><h1 class="logo">Goodfood</h1></div>
+  <div><a href="/"><h1 class="logo">Goodfood</h1></a></div>
   <button
     aria-controls="primary-navigation"
     aria-expanded="false"
@@ -35,7 +35,7 @@
         <!--if user logged in is data clerk-->
         {{#if user.isDataEntryClerk}}
           <li><a href="/api/products/create_product">New Product</a></li>
-          <li><a href="/api/products/products_list">Products</a></li>
+          <li><a href="/data_clerk">Products</a></li>
 
           <!--if user logged in is customer-->
         {{else}}
@@ -43,17 +43,12 @@
           {{! <li>Gift Cards</li> }}
           <li>
             <a href="/api/cart/shopping-cart">
-              <img src="/images/ShoppingCart.svg" alt="ShoppingCart icon" />
-            </a>
+              <img
+                src="/images/ShoppingCart.svg"
+                alt="Shopping Cart"
+                width="30px"
+              /></a>
 
-            <!-- Item counter will be dynamically updated using JavaScript -->
-            <div class="item-counter" id="cart-item-count">
-              {{#if cart}}
-                <span>{{cart.totalQty}}</span>
-              {{else}}
-                <span>0</span>
-              {{/if}}
-            </div>
           </li>
         {{/if}}
         <li><a id="log-out" href="/logout">Log Out</a></li>

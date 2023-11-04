@@ -33,7 +33,7 @@ app.use((req, res, next) => {
   res.locals.session = req.session;
   res.locals.user = req.session.user;
   res.locals.cart = req.session.cart;
-  res.locals.cart_total = req.session.cart_total;
+  res.locals.subTotal = req.session.subTotal;
   next();
 });
 
@@ -86,6 +86,8 @@ mongoose
     console.log(`There was a problem connecting to MongoDB ... ${err}`);
   });
 
+//add users (1 customer )
+
 /************************
  * EMAIL CONFIGURATION  *
  ************************/
@@ -124,16 +126,3 @@ app.use("/api/cart", cartRoutes);
 app.listen(HTTP_PORT, () => {
   console.log("Express http server listening on: " + HTTP_PORT);
 });
-
-/************************
- * Set up Stripe        *
- ************************/
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
-/* 
-//stripe API call example
-const customer = await stripe.customers.create({
-  email: 'customer@example.com',
-  name: 'John Doe',
-});
-*/

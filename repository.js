@@ -31,7 +31,13 @@ products = async () => {
   return products;
 };
 productById = async (id) => {
-  const product = await Product.findById(id);
+  let product = {};
+  try {
+    product = await Product.findById(id);
+  } catch (err) {
+    console.log(err);
+  }
+  console.log(product);
   return product;
 };
 

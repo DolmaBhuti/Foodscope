@@ -1,58 +1,124 @@
-<div class="form-wrapper">
-  <h2 class="form-title">Create New Product</h2>
-  <p class="form-description">Enter the details below.
-  </p>
+<head>
+  <title>Edit {{data.ProductName}}</title>
+</head>
+<div class="form-container create-form-container">
   <form
     action="/api/products/create_product"
     enctype="multipart/form-data"
     method="POST"
+    id="create-form"
   >
-    <div class="form-grid-container">
-      <div class="form-grid-items">
-        {{#if errMessage.Product}}
+    <h2 class="form-title">Create New Product</h2>
+    <div class="user-details">
+      <div class="input-box">
+        {{#if errMessage.ProductName}}
           <span class="form-error-msg">{{errMessage.ProductName}}</span>
         {{/if}}<br />
-        <label for="first_name">Product Name</label>
+        <label for="ProductName" class="details">Product Name</label>
         <br />
         <input
-          type="textProduct"
+          type="text"
           name="ProductName"
           id="ProductName"
-          value="{{values.ProductName}}"
+          value="{{data.ProductName}}"
         />
       </div>
-      <div class="form-grid-items">
+      <div class="input-box">
         {{#if errMessage.ProductDesc}}
           <span class="form-error-msg">{{errMessage.ProductDesc}}</span>
         {{/if}}<br />
-        <label for="ProductDesc"> Description</label>
+        <label for="ProductDesc" class="details"> Description</label>
         <br />
         <input
           type="text"
           name="ProductDesc"
           id="ProductDesc"
-          value="{{values.ProductDesc}}"
+          value="{{data.ProductDesc}}"
         />
       </div>
-      <div class="form-grid-items">
-        {{#if errMessage.ProductPrice}}
-          <span class="form-error-msg">{{errMessage.ProductPrice}}</span>
+      <div class="input-box">
+        {{#if errMessage.ProductIngredients}}
+          <span class="form-error-msg">{{errMessage.ProductIngredients}}</span>
         {{/if}}<br />
-        <label for="ProductPrice">Price(in cents)</label>
+        <label for="ProductIngredients" class="details"> Ingredients</label>
         <br />
         <input
           type="text"
-          name="ProductPrice"
-          id="ProductPrice"
-          value="{{values.ProductPrice}}"
+          name="ProductIngredients"
+          id="ProductIngredients"
+          value="{{data.ProductIngredients}}"
         />
       </div>
-
-      <div class="form-grid-items">
+      <div class="input-box">
+        {{#if errMessage.ProductCategory}}
+          <span class="form-error-msg">{{errMessage.ProductCategory}}</span>
+        {{/if}}<br />
+        <label for="ProductCategory" class="details"> Category</label>
+        <br />
+        <input
+          type="text"
+          name="ProductCategory"
+          id="ProductCategory"
+          value="{{data.ProductCategory}}"
+        />
+      </div>
+      <div class="input-box">
+        {{#if errMessage.CookingTime}}
+          <span class="form-error-msg">{{errMessage.CookingTime}}</span>
+        {{/if}}<br />
+        <label for="CookingTime" class="details"> Cooking time</label>
+        <br />
+        <input
+          type="number"
+          name="CookingTime"
+          id="CookingTime"
+          value="{{data.CookingTime}}"
+        />
+      </div>
+      <div class="input-box">
+        {{#if errMessage.Serving}}
+          <span class="form-error-msg">{{errMessage.Serving}}</span>
+        {{/if}}<br />
+        <label for="Serving" class="details"> Servings</label>
+        <br />
+        <input
+          type="number"
+          name="Serving"
+          id="Serving"
+          value="{{data.Serving}}"
+        />
+      </div>
+      <div class="input-box">{{#if errMessage.Calories}}
+          <span class="form-error-msg">{{errMessage.Calories}}</span>
+        {{/if}}<br />
+        <label for="Calories" class="details">Calories
+        </label>
+        <br />
+        <input
+          type="number"
+          name="Calories"
+          id="Calories"
+          value="{{data.Calories}}"
+        />
+      </div>
+      <div class="input-box">{{#if errMessage.ProductPrice}}
+          <span class="form-error-msg">{{errMessage.ProductPrice}}</span>
+        {{/if}}<br />
+        <label for="ProductPrice" class="details">Price
+        </label>
+        <br />
+        <input
+          type="number"
+          name="ProductPrice"
+          id="ProductPrice"
+          value="{{data.ProductPrice}}"
+        />
+      </div>
+      <div class="input-box">
         {{#if errMessage.image}}
           <span class="form-error-msg">{{errMessage.image}}</span>
         {{/if}}<br />
-        <label for="testImage">Product Image</label>
+        <label for="testImage" class="details">Product Image</label>
         <br />
         <input
           type="file"
@@ -61,10 +127,9 @@
           accept="image/png, image/gif, image/jpeg"
         />
       </div>
-
-      <div class="form-grid-items">
-        <button class="button" type="submit">Add New Product</button>
-      </div>
+    </div>
+    <div class="button">
+      <button type="submit">Edit Product</button>
     </div>
   </form>
 </div>

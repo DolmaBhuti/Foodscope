@@ -1,22 +1,33 @@
-<h1>Hot Cases</h1>
-    <section class="content-container">
-  {{#each this}}
-        <div class="product-card">
-          <div class="product-img">
-            <img src="{{ProductImage}}" alt="" />
-          </div>
-          <div class="product-details">
-            <h4><a href="">{{ProductName}}</a></h4>
-            <p>
-              {{ProductDesc}}
-            </p>
-            <hr>
-              <div class="product-price">{{ProductPrice}}</div>
-              <div class="product-links">
-                <a href="#">Add To Cart</i></a>
-          </div>
-          </div>
-        </div>
-{{/each}}
+<section class="content">
+  <h1>Products</h1>
+  <div class="content-container">
+    {{#each this}}
+      <div class="product-card">
+        <a href="/api/products/product_description/{{_id}}">
 
-    </section>
+          {{! <div class="product-img"> }}
+          <img src="/images/{{filename}}" alt="Product Image" />
+          {{! </div> }}
+          <div class="product-description">
+            <div class="product-details">
+              <h4>{{ProductName}}</h4>
+              <p>
+                {{ProductDesc}}
+              </p>
+            </div>
+
+            <div class="product-links">
+              <div class="product-price">{{ProductPrice}}</div>
+
+              <form action="/api/cart/add-item-to-cart/{{_id}}" method="post">
+                <input type="hidden" name="quantity" id="quantity" value="1" />
+                <button type="submit">Add To Cart</button>
+              </form>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    {{/each}}
+  </div>
+</section>

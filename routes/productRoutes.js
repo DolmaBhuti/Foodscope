@@ -53,10 +53,7 @@ router.get("/", function (req, res) {
   //only a customer or a visitor can see this page.  data clerk cannot shop
 
   //if there is no logged in user (visitor) OR the user is customer
-  if (
-    !req.session.user ||
-    (req.session.user && !req.session.user.isDataEntryClerk)
-  ) {
+  if (req.session.user && !req.session.user.isDataEntryClerk) {
     productsController.getAllProducts(req, res);
   }
 });
@@ -66,21 +63,23 @@ router.get("/product_description/:id", productsController.getProduct);
 
 //add item to shopping cart
 router.post("/shopping_cart/:id", (req, res, next) => {
-  var productId = req.params.id;
-  var cart = new Cart(req.session.cart ? req.session.cart : {});
+  if (req.session.user && !req.session.user.isDataEntryClerk) {
+    var productId = req.params.id;
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
 
-  Product.findById(productId)
-    .then((doc) => {
-      cart.add(doc, doc._id);
-      req.session.cart = cart;
+    Product.findById(productId)
+      .then((doc) => {
+        cart.add(doc, doc._id);
+        req.session.cart = cart;
 
-      console.log(req.session.cart);
-      res.redirect("/api/products/");
-    })
-    .catch((err) => {
-      console.log("error finding product ", err);
-      res.redirect("/api/products/");
-    });
+        console.log(req.session.cart);
+        res.redirect("/api/products/");
+      })
+      .catch((err) => {
+        console.log("error finding product ", err);
+        res.redirect("/api/products/");
+      });
+  }
 });
 
 //shopping cart page
@@ -118,18 +117,26 @@ router.post(
   //upload file before accessing req.body, otherwise req.body cant be accessed
   upload.single("testImage"),
   [
-    body("product_name").notEmpty().withMessage("* Field cannot be empty."),
-    body("product_desc").notEmpty().withMessage("* Field cannot be empty."),
-    body("product_price").notEmpty().withMessage("* Field cannot be empty."),
+    body("ProductName").notEmpty().withMessage("* Field cannot be empty."),
+    body("ProductDesc").notEmpty().withMessage("* Field cannot be empty."),
+    body("ProductPrice").notEmpty().withMessage("* Field cannot be empty."),
+    body("ProductIngredients")
+      .notEmpty()
+      .withMessage("* Field cannot be empty."),
+    body("ProductCategory").notEmpty().withMessage("* Field cannot be empty."),
+    body("CookingTime").notEmpty().withMessage("* Field cannot be empty."),
+    body("Serving").notEmpty().withMessage("* Field cannot be empty."),
+    body("Calories").notEmpty().withMessage("* Field cannot be empty."),
+    body("ProductPrice").notEmpty().withMessage("* Field cannot be empty."),
   ],
   productsController.postProduct
 );
 
 //get a list of products with edit/delete button
-router.get("/products_list", productsController.getProductsList);
+// router.get("/products_list", productsController.getProductsList);
 
 //DELETE a single product
-router.delete("/delete_product/:id", productsController.deleteProduct);
+router.get("/delete_product/:id", productsController.deleteProduct);
 
 //UPDATE a single product
 router.get("/edit_product/:id", productsController.editProductView); //form
@@ -141,8 +148,16 @@ router.post(
     body("ProductName").notEmpty().withMessage("* Field cannot be empty."),
     body("ProductDesc").notEmpty().withMessage("* Field cannot be empty."),
     body("ProductPrice").notEmpty().withMessage("* Field cannot be empty."),
+    body("ProductIngredients")
+      .notEmpty()
+      .withMessage("* Field cannot be empty."),
+    body("ProductCategory").notEmpty().withMessage("* Field cannot be empty."),
+    body("CookingTime").notEmpty().withMessage("* Field cannot be empty."),
+    body("Serving").notEmpty().withMessage("* Field cannot be empty."),
+    body("Calories").notEmpty().withMessage("* Field cannot be empty."),
+    body("ProductPrice").notEmpty().withMessage("* Field cannot be empty."),
   ],
   productsController.editProduct
-); //post
+);
 
 module.exports = router;

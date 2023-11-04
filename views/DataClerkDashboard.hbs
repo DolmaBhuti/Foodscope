@@ -1,0 +1,59 @@
+<head>
+  <title>{{current_user.FirstName}} {{current_user.LastName}}</title>
+</head>
+
+<section class="dashboard">
+
+  {{#if errMessage.delete}}
+    <span class="form-error-msg">{{errMessage.delete}}</span>
+  {{/if}}
+  {{#if errMessage.edit}}
+    <span class="form-error-msg">{{errMessage.edit}}</span>
+  {{/if}}
+  <div class="clerk-table-container">
+    <table class="products-list-table">
+      <thead>
+
+        <tr class="products-list-header table-header">
+          <th>Name</th>
+          <th>Description</th>
+          <th>Ingredients</th>
+          <th>Cook Time</th>
+          <th>Servings</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data}}
+          <tr class="products-list-item table-data">
+
+            <td>{{ProductName}}</td>
+            <td>
+              <p>{{ProductCategory}}</p>
+              <p>{{ProductDesc}}</p>
+              <p>{{Calories}} cal</p>
+            </td>
+            <td>{{ProductIngredients}} </td>
+            <td>{{CookingTime}} mins </td>
+            <td>{{Serving}}</td>
+            <td>{{ProductPrice}}</td>
+            <td class="clerk-action">
+              <button>
+                <a href="/api/products/delete_product/{{_id}}">Delete</a>
+              </button>
+              <button>
+                <a href="/api/products/edit_product/{{_id}}">Edit</a>
+              </button>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+</section>
+{{!-- <div class="dashboard-grid-container">Data Clerk Dashboard
+    {{data.FirstName}}
+    {{data.LastName}}
+  </div> --}}
