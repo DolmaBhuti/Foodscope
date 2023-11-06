@@ -4,13 +4,16 @@ const exphbs = require("express-handlebars");
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const productRoutes = require("./routes/productRoutes");
+const loginRoutes = require("./routes/loginRoutes");
+const cartRoutes = require("./routes/cartRoutes");
 
 var HTTP_PORT = process.env.PORT;
 
 //express app
 var app = express();
 
-//middleware
+//set up middlewares using app.use
 app.use(express.static(__dirname + "/static")); //only call the file name or images in "views" folder" (/images/ss.jpg)
 
 /************************
@@ -18,13 +21,13 @@ app.use(express.static(__dirname + "/static")); //only call the file name or ima
  ************************/
 app.use(
   session({
-    //pass session into express
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }, //specifies the optionfor the session cookie (will create session middleware)
   })
 );
+
 app.use((req, res, next) => {
   //res.locals.user is a global handlebars variable
   //every single handlesbars file can access that user variable
@@ -40,9 +43,8 @@ app.use((req, res, next) => {
 // Parse application/x-www-form-urlencoded (form data)
 app.use(express.urlencoded({ extended: false }));
 
-//any request that cones in, it looks if there is any body in the request and if it does, then it passes it and attaches it to the request object so tha twe can access it in the request handler
+//any request that cones in, it looks if there is any body in the request and if it does, then it passes it and attaches it to the request object so that we can access it in the request handler
 app.use(express.json()); //https://expressjs.com/en/api.html
-//important to send data back
 
 /************************
  * HANDLEBARS CONFIG ****
@@ -86,39 +88,12 @@ mongoose
     console.log(`There was a problem connecting to MongoDB ... ${err}`);
   });
 
-//add users (1 customer )
-
-/************************
- * EMAIL CONFIGURATION  *
- ************************/
-// const sgMail = require("@sendgrid/mail");
-// const nodeMailer = require("nodemailer");
-
-//set up send grid api
-// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
-//registration email message
-// const html = "<strong>and easy to do anywhere, even with Node.js</strong>";
-// async function main() {
-//   //specify information about the mail server that youre going to be sending emails from
-//   nodeMailer.createTransport({});
-// }
-// const message = {
-//   to: "", //dynamiclly change to clients
-//   from: "dbhuti95@gmail.com",
-//   subject: "Sending with Twilio SendGrid is Fun",
-//   text: "and easy to do anywhere, even with Node.js",
-//   html: "<strong>and easy to do anywhere, even with Node.js</strong>",
-// };
-
 /************************
  * ROUTES ***************
  ************************/
 
 //routes -> controller -> model
-const productRoutes = require("./routes/productRoutes");
-const loginRoutes = require("./routes/loginRoutes");
-const cartRoutes = require("./routes/cartRoutes");
+
 app.use("/api/products/", productRoutes); //only fire the routes at a specific path
 app.use("/", loginRoutes);
 app.use("/api/cart", cartRoutes);
@@ -126,3 +101,59 @@ app.use("/api/cart", cartRoutes);
 app.listen(HTTP_PORT, () => {
   console.log("Express http server listening on: " + HTTP_PORT);
 });
+
+/************************
+ * EMAIL CONFIGURATION using Amazon SES *
+ ************************/
+
+const { SESClient, CreateTemplateCommand } = require("@aws-sdk/client-ses");
+
+const SES_CONFIG = {
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+  region: process.env.AWS_SES_REGION,
+};
+
+//Create SES service object
+const sesClient = new SESClient(SES_CONFIG);
+
+const welcomeUser = async (template_name) => {
+  const createTemplateCommand = new CreateTemplateCommand({
+    Template: {
+      TemplateName: template_name, // REQUIRED
+      HtmlPart: ``,
+      TextPart: ``,
+      SubjectPart: ``,
+    },
+  });
+
+  try {
+    await sesClient.send(createTemplateCommand); //will create a template in SES dashboard
+    console.log("SES template has been created");
+  } catch (err) {
+    console.error("Could not create template", err);
+  }
+};
+
+const checkOutEmail = async (template_name) => {
+  const createTemplateCommand = new CreateTemplateCommand({
+    Template: {
+      TemplateName: template_name, // REQUIRED
+      HtmlPart: ``,
+      TextPart: ``,
+      SubjectPart: ``,
+    },
+  });
+
+  try {
+    await sesClient.send(createTemplateCommand); //will create a template in SES dashboard
+    console.log("SES template has been created");
+  } catch (err) {
+    console.error("Could not create template", err);
+  }
+};
+
+welcomeUser("Welcome-User-Template");
+checkOutEmail("Checkout-Order-Template");

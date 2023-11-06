@@ -2,48 +2,65 @@
   <div class="cart-container">
     <div class="cart-header">
       <h3>Shopping Cart</h3>
+    </div>
+    <div class="cart-header remove-link">
       <h5><a href="/api/cart/empty-cart">Remove all</a></h5>
     </div>
-    <div class="cart-table-container">
+
+    <div class="cart-table">
       {{#if products}}
         <table class="cart-list-table">
-          <tr class="cart-list-header table-header">
-            <th></th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total Price</th>
-          </tr>
-          {{#each products}}
-            <tr class="cart-list-item table-data">
-              <img src="/images/{{filename}}" />
+          <thead><tr class="cart-list-header table-header">
+              <th></th>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th></th>
+            </tr></thead>
+          <tbody>
+            {{#each products}}
+              <tr class="cart-list-item table-data">
+                <td><img src="/images/{{filename}}" /></td>
 
-              <td>{{ProductName}}</td>
-              <td>
-                {{ProductPrice}}
-              </td>
-              <td>
-                <a href="/api/cart/add-item-quantity/{{_id}}">
-                  <i class="fa-solid fa-plus"></i>
-                </a>
+                <td>{{ProductName}}</td>
+                <td>
 
-                {{quantity}}
+                  <a href="/api/cart/subtract-item-quantity/{{_id}}">
+                    <i class="fa-solid fa-minus"></i>
+                  </a>
+                  {{quantity}}
+                  <a href="/api/cart/add-item-quantity/{{_id}}">
+                    <i class="fa-solid fa-plus"></i>
+                  </a>
 
-                <a href="/api/cart/subtract-item-quantity/{{_id}}">
-                  <i class="fa-solid fa-minus"></i>
-                </a>
-              </td>
-              <td>{{total}}</td>
-              <td><a href="/api/cart/remove-item/{{_id}}">X</a></td>
-            </tr>
-          {{/each}}
+                </td>
+
+                <td>{{total}}</td>
+                <td><a href="/api/cart/remove-item/{{_id}}">Remove</a></td>
+              </tr>
+            {{/each}}
+          </tbody>
         </table>
-        <div><strong>Sub Total: {{subTotal}}</strong></div>
-        <a href="/api/cart/checkout">Checkout</a>
       {{else}}
         <div>No items in cart</div>
 
       {{/if}}
     </div>
+    <div class="cart-summary">
+      <p>Merchandise Subtotal</p>
+      <p>{{subTotal}}</p>
+      <p>Shipping and Handling</p>
+      <p>TBD</p>
+      <p>Estimated tax</p>
+      <p>TBD</p>
+      <p class="estimated-total">Estimated Total:</p>
+      <p class="estimated-total">{{subTotal}}</p>
+    </div>
+    <div class="checkout-btn">
+      <button><a href="#">Checkout</a></button>
+
+    </div>
+
   </div>
+
 </section>

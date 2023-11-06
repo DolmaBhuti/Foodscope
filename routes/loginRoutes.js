@@ -11,6 +11,28 @@ const Product = require("../models/ProductModel");
 //set up express-validator: it performs both validation and sanitization of our form data
 const { body, validationResult } = require("express-validator");
 
+//SES config
+
+const { SESClient, SendTemplatedEmailCommand } = require("@aws-sdk/client-ses");
+const SES_CONFIG = {
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+  region: process.env.AWS_SES_REGION,
+};
+
+const sendMail = async (templateName, recipientEmail, templateData) => {
+  const sendTemplatedEmailCommand = new SendTemplatedEmailCommand({
+    Destination: {
+      ToAddresses: [recipientEmail],
+    },
+    Source: process.env.AWS_SES_SENDER,
+    Template: templateName,
+    TemplateData: JSON.stringify(templateData),
+  });
+};
+
 //sign up user form
 router.get("/registration", loginController.registerView);
 
