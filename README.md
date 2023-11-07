@@ -19,8 +19,7 @@
 <h1>Data Clerk CRUD functions</h1>
 
 <h2>Admin Dashboard</h2>
-<img src="./static/images/data _clerk_products.jpg">
+<img src="./static/images/data_clerk_products.jpg">
 
 <h2>Create Product Form</h2>
 <img src="./static/images/data_clerk_create.jpg">
-> > > > > > > 7d2825f01360f9c6e23921b14a575fd7eea2bc06
