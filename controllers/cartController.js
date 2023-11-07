@@ -1,21 +1,4 @@
 const productModel = require("../models/ProductModel");
-getCart = (req, res) => {
-  (req, res) => {
-    const user = req.session.user;
-    console.log("Getting cart for user, " + user);
-    if (user && !user.isDataEntryClerk) {
-      if (!req.session.cart) {
-        req.session.cart = [];
-        req.session.subTotal = 0;
-      }
-      res.render("customer/ShoppingCart", {
-        products: req.session.cart,
-        subTotal: req.session.subTotal,
-        title: "Your Cart",
-      });
-    }
-  };
-};
 
 //cart model == [array of items (including quantity)]
 //cart subtotal
@@ -65,19 +48,13 @@ addItemToCart = (req, res) => {
 
             req.session.subTotal += product.ProductPrice;
 
-            console.log(
-              "Item pushed into cart, ",
-              req.session.cart.ProductName
-            );
+            console.log("Item pushed into cart, ", req.session.cart);
             console.log("Subtotal is now ", req.session.subTotal);
 
-            res.redirect("/api/cart/shopping-cart");
+            return res.redirect("/api/cart/shopping-cart");
           } else {
             console.log("No such product found");
             return res.redirect("/api/products");
-            //TODO: render shopping cart with error message (unable to add to cart)
-            let errMessage = "Could not add item to cart.  Try again";
-            res.render();
           }
         })
         .catch((err) => {
@@ -97,8 +74,8 @@ addItemToCart = (req, res) => {
         req.session.cart.quantity
       );
       console.log("Subtotal is now ", req.session.subTotal);
+      return res.redirect("/api/cart/shopping-cart");
     }
-    res.redirect("/api/cart/shopping-cart");
   }
 };
 addQuantityToCartItem = (req, res) => {
@@ -113,6 +90,13 @@ addQuantityToCartItem = (req, res) => {
       req.session.cart[itemIndex].total +=
         req.session.cart[itemIndex].ProductPrice;
       req.session.subTotal += req.session.cart[itemIndex].ProductPrice;
+
+      //make total fixed to 2 decimal places
+      req.session.cart[itemIndex].total = parseFloat(
+        req.session.cart[itemIndex].total.toFixed(2)
+      );
+
+      req.session.subTotal = parseFloat(req.session.subTotal.toFixed(2));
       console.log("quantity updated, ", req.session.cart);
       res.redirect("/api/cart/shopping-cart");
     }
@@ -134,6 +118,13 @@ subtractQuantityFromCartItem = (req, res) => {
         req.session.cart[itemIndex].total -=
           req.session.cart[itemIndex].ProductPrice;
         req.session.subTotal -= req.session.cart[itemIndex].ProductPrice;
+
+        //make total fixed to 2 decimal places
+        req.session.cart[itemIndex].total = parseFloat(
+          req.session.cart[itemIndex].total.toFixed(2)
+        );
+
+        req.session.subTotal = parseFloat(req.session.subTotal.toFixed(2));
       }
       console.log("quantity updated, ", req.session.cart);
       res.redirect("/api/cart/shopping-cart");
@@ -169,7 +160,6 @@ module.exports = {
   checkoutCart,
   addItemToCart,
   removeItemFromCart,
-  getCart,
   emptyCart,
   subtractQuantityFromCartItem,
   addQuantityToCartItem,
