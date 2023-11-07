@@ -31,8 +31,6 @@ router.get(
   cartController.subtractQuantityFromCartItem
 );
 
-router.get("/checkout", (req, res) => {
-  res.render("customer/checkout");
-});
+router.get("/checkout", cartController.checkoutCart);
 
 module.exports = router;

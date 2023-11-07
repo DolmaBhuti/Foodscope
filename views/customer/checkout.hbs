@@ -1,1 +1,27 @@
-<section><div>Checkout</div></section>
+<section class="checkout-page">
+  <div class="checkout-container">
+    <div class="checkout-header"> <h1>Your Order</h1> </div>
+    <div class="checkout-items">
+      <h5>Order items</h5>
+      <ul>
+        {{#each products}}
+          <li class="checkout-item">
+            <img src="/images/{{filename}}" alt="product image" />
+            <p>{{ProductName}} </p>
+            <p>${{ProductPrice}}</p>
+            <p>X {{quantity}}</p>
+            <p>${{total}}</p>
+            {{! <div class="checkout-product-details">
+              
+            </div> }}
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="checkout-bottom">
+
+      <p> Total</p>
+      <p>CAD ${{subTotal}}</p>
+    </div>
+  </div>
+</section>

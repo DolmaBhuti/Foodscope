@@ -154,7 +154,13 @@ removeItemFromCart = (req, res) => {
   }
 };
 
-checkoutCart = (req, res) => {};
+checkoutCart = (req, res) => {
+  res.render("customer/checkout", {
+    products: req.session.cart,
+    subTotal: req.session.subTotal,
+    title: "Your Order",
+  });
+};
 
 module.exports = {
   checkoutCart,
