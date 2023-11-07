@@ -18,27 +18,41 @@
               <th></th>
             </tr></thead>
           <tbody>
-            {{#each products}}
+            {{#products}}
               <tr class="cart-list-item table-data">
-                <td><img src="/images/{{filename}}" /></td>
+                <td><img src="/images/{{this.filename}}" /></td>
 
-                <td>{{ProductName}}</td>
+                <td>{{this.ProductName}}</td>
                 <td>
+                  <form
+                    action="/api/cart/subtract-item-quantity/{{this._id}}"
+                    method="post"
+                  >
+                    <button type="submit">
+                      <i class="fa-solid fa-minus"></i>
+                    </button>
+                  </form>
+                  {{!-- <a href="/api/cart/subtract-item-quantity/{{this._id}}">
 
-                  <a href="/api/cart/subtract-item-quantity/{{_id}}">
-                    <i class="fa-solid fa-minus"></i>
-                  </a>
+                  </a> --}}
                   {{quantity}}
-                  <a href="/api/cart/add-item-quantity/{{_id}}">
+                  {{!-- <a href="/api/cart/add-item-quantity/{{this._id}}">
                     <i class="fa-solid fa-plus"></i>
-                  </a>
-
+                  </a> --}}
+                  <form
+                    action="/api/cart/add-item-quantity/{{this._id}}"
+                    method="post"
+                  >
+                    <button type="submit"><i
+                        class="fa-solid fa-plus"
+                      ></i></button>
+                  </form>
                 </td>
 
-                <td>{{total}}</td>
-                <td><a href="/api/cart/remove-item/{{_id}}">Remove</a></td>
+                <td>{{this.total}}</td>
+                <td><a href="/api/cart/remove-item/{{this._id}}">Remove</a></td>
               </tr>
-            {{/each}}
+            {{/products}}
           </tbody>
         </table>
       {{else}}

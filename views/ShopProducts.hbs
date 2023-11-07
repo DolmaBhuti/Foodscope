@@ -27,7 +27,10 @@
               <div class="main-product-links">
                 <div class="main-product-price">{{ProductPrice}}</div>
 
-                <form action="/api/cart/add-item-to-cart/{{_id}}" method="post">
+                <form
+                  action="/api/cart/add-item-to-cart/{{this._id}}"
+                  method="post"
+                >
                   <button type="submit">Add To Cart</button>
                 </form>
               </div>

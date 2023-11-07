@@ -1,21 +1,25 @@
+"use strict";
+
 const productModel = require("../models/ProductModel");
 
 //cart model == [array of items (including quantity)]
 //cart subtotal
 
-addItemToCart = (req, res) => {
-  productID = req.params.id;
+const addItemToCart = (req, res) => {
   const user = req.session.user;
 
   if (user && !user.isDataEntryClerk) {
     console.log("in addItemToCart route");
 
-    if (!req.session.cart) req.session.cart = {};
+    if (!req.session.cart) {
+      req.session.cart = [];
+      req.session.subTotal = 0;
+    }
     if (req.session.subTotal == undefined) req.session.subTotal = 0;
 
     //check to see if this item already exists in the cart
     const itemIndex = req.session.cart.findIndex(function (object) {
-      return object._id === productID;
+      return object._id === req.params.id;
     });
 
     //item does not exist in item
@@ -23,7 +27,7 @@ addItemToCart = (req, res) => {
       console.log("item does not exist in cart");
       //find productId in mongoose productModel'
       productModel
-        .findById(productID)
+        .findById(req.params.id)
         .then((product) => {
           if (product) {
             console.log("product found", product._doc.ProductName);
@@ -65,8 +69,9 @@ addItemToCart = (req, res) => {
       console.log("item does exist in cart");
 
       req.session.cart[itemIndex].quantity++;
-      req.session.cart[itemIndex].total += cart[itemIndex].ProductPrice;
-      req.session.subTotal += cart[itemIndex].ProductPrice;
+      req.session.cart[itemIndex].total +=
+        req.session.cart[itemIndex].ProductPrice;
+      req.session.subTotal += req.session.cart[itemIndex].ProductPrice;
 
       console.log(
         "Item quantity updated in cart, ",
@@ -78,12 +83,15 @@ addItemToCart = (req, res) => {
     }
   }
 };
-addQuantityToCartItem = (req, res) => {
+const addQuantityToCartItem = (req, res) => {
+  console.log(req.params.id);
+  console.log("before changing quantity", req.session.cart);
+
   if (req.session.user && !req.session.user.isDataEntryClerk) {
     const itemIndex = req.session.cart.findIndex(function (object) {
-      return (object._id = req.params.id);
+      return object._id === req.params.id;
     });
-
+    console.log("item index should be 1, ", itemIndex);
     if (itemIndex != -1) {
       //increment the quantity of the product at the index
       req.session.cart[itemIndex].quantity++;
@@ -97,49 +105,56 @@ addQuantityToCartItem = (req, res) => {
       );
 
       req.session.subTotal = parseFloat(req.session.subTotal.toFixed(2));
-      console.log("quantity updated, ", req.session.cart);
-      res.redirect("/api/cart/shopping-cart");
+      console.log("after chanign quantity", req.session.cart);
+
+      res.render("customer/ShoppingCart", {
+        products: req.session.cart,
+        subTotal: req.session.subTotal,
+        title: "Your Cart",
+      });
     }
   }
 };
 
-subtractQuantityFromCartItem = (req, res) => {
+const subtractQuantityFromCartItem = (req, res) => {
+  console.log(req.params.id);
   if (req.session.user && !req.session.user.isDataEntryClerk) {
     const itemIndex = req.session.cart.findIndex(function (object) {
-      return (object._id = req.params.id);
+      return object._id === req.params.id;
     });
 
     if (itemIndex != -1) {
+      let price = req.session.cart[itemIndex].ProductPrice;
       //decrement the quantity of the product at the index
       if (req.session.cart[itemIndex].quantity <= 1) {
         req.session.cart.splice(itemIndex, 1);
       } else {
         req.session.cart[itemIndex].quantity--;
-        req.session.cart[itemIndex].total -=
-          req.session.cart[itemIndex].ProductPrice;
-        req.session.subTotal -= req.session.cart[itemIndex].ProductPrice;
-
-        //make total fixed to 2 decimal places
+        req.session.cart[itemIndex].total -= price;
         req.session.cart[itemIndex].total = parseFloat(
           req.session.cart[itemIndex].total.toFixed(2)
         );
-
-        req.session.subTotal = parseFloat(req.session.subTotal.toFixed(2));
       }
-      console.log("quantity updated, ", req.session.cart);
-      res.redirect("/api/cart/shopping-cart");
+      req.session.subTotal -= price;
+      req.session.subTotal = parseFloat(req.session.subTotal.toFixed(2));
+    }
+
+    if (req.session.cart.length <= 0) {
+      return res.redirect("/api/products");
+    } else {
+      return res.redirect("/api/cart/shopping-cart");
     }
   }
 };
-emptyCart = (req, res) => {
+const emptyCart = (req, res) => {
   if (req.session.user && !req.session.user.isDataEntryClerk) {
     delete req.session.cart;
     delete req.session.subTotal;
-    res.redirect("/api/cart/shopping-cart");
+    res.redirect("/api/products");
   }
 };
 
-removeItemFromCart = (req, res) => {
+const removeItemFromCart = (req, res) => {
   if (req.session.user && !req.session.user.isDataEntryClerk) {
     //find index of product id in the cart
     const itemIndex = req.session.cart.findIndex(function (object) {
@@ -148,13 +163,14 @@ removeItemFromCart = (req, res) => {
 
     if (itemIndex != -1) {
       req.session.cart.splice(itemIndex, 1);
-      console.log(req.session.cart);
+      req.session.subTotal -= req.session.cart[itemIndex].total;
+
       res.redirect("/api/cart/shopping-cart");
     }
   }
 };
 
-checkoutCart = (req, res) => {
+const checkoutCart = (req, res) => {
   res.render("customer/checkout", {
     products: req.session.cart,
     subTotal: req.session.subTotal,

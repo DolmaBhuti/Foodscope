@@ -22,11 +22,11 @@ router.get("/shopping-cart", (req, res) => {
 
 router.get("/remove-item/:id", cartController.removeItemFromCart);
 
-router.delete("/empty-cart", cartController.emptyCart);
+router.get("/empty-cart", cartController.emptyCart);
 
-router.get("/add-item-quantity/:id", cartController.addQuantityToCartItem);
+router.post("/add-item-quantity/:id", cartController.addQuantityToCartItem);
 
-router.get(
+router.post(
   "/subtract-item-quantity/:id",
   cartController.subtractQuantityFromCartItem
 );

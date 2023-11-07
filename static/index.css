@@ -735,7 +735,9 @@ thead th:nth-child(6) {
 .checkout-btn a {
   color: var(--color-main);
 }
-
+.cart-list-item form {
+  display: inline;
+}
 /* checkout page */
 .checkout-page {
   width: 100vw;
