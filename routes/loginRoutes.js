@@ -11,28 +11,6 @@ const Product = require("../models/ProductModel");
 //set up express-validator: it performs both validation and sanitization of our form data
 const { body, validationResult } = require("express-validator");
 
-//SES config
-
-const { SESClient, SendTemplatedEmailCommand } = require("@aws-sdk/client-ses");
-const SES_CONFIG = {
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  },
-  region: process.env.AWS_SES_REGION,
-};
-
-const sendMail = async (templateName, recipientEmail, templateData) => {
-  const sendTemplatedEmailCommand = new SendTemplatedEmailCommand({
-    Destination: {
-      ToAddresses: [recipientEmail],
-    },
-    Source: process.env.AWS_SES_SENDER,
-    Template: templateName,
-    TemplateData: JSON.stringify(templateData),
-  });
-};
-
 //sign up user form
 router.get("/registration", loginController.registerView);
 
@@ -111,24 +89,6 @@ router.post(
     } else {
       //everything went well
       if (req.body.password === req.body.confirm_password) {
-        //check if email is unique
-
-        //encrypt password using bcrypt
-
-        //send email welcome message.
-        //change email client address
-        // message.to = req.body.email;
-        // sgMail
-        //   .send(message)
-        //   .then((res) => console.log("Email sent to " + message.to))
-        //   .catch((error) => {
-        //     console.log("Error sending email: " + error.message);
-
-        //     if (error.response) {
-        //       console.error(error.response.body);
-        //     }
-        //   });
-
         //TODO: create a user document in database
         loginController
           .registerUser(req.body)
