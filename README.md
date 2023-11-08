@@ -1,8 +1,8 @@
 # Foodscope
 
-<h2>This website was created with Nodejs/Express, HTML/CSS/Javascript, and MongoDB database structured and accessed through the Mongoose ODM.</h2>
+<p>This website was created with Nodejs/Express, HTML/CSS/Javascript.  The MongoDB database is structured and accessed through the Mongoose ODM.</p>
 
-<h2>Access the live website running on: https://foodscope.onrender.com/ </h2>
+<p>Access the live website running on: https://foodscope.onrender.com/ </p>
 
 # Screen shots
 
