@@ -4,6 +4,8 @@ const exphbs = require("express-handlebars");
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
+
 const productRoutes = require("./routes/productRoutes");
 const loginRoutes = require("./routes/loginRoutes");
 const cartRoutes = require("./routes/cartRoutes");
@@ -17,6 +19,22 @@ var app = express();
 app.use(express.static(__dirname + "/static")); //only call the file name or images in "views" folder" (/images/ss.jpg)
 
 /************************
+ * Database config      *
+ ************************/
+// Set up and connect to MongoDB
+mongoose
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected to the MongoDB database.");
+  })
+  .catch((err) => {
+    console.log(`There was a problem connecting to MongoDB ... ${err}`);
+  });
+
+/************************
  * express-session   ****
  ************************/
 app.use(
@@ -24,6 +42,8 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+
     cookie: { secure: false }, //specifies the optionfor the session cookie (will create session middleware)
   })
 );
@@ -71,22 +91,6 @@ app.engine(
   })
 );
 app.set("view engine", ".hbs");
-
-/************************
- * Database config      *
- ************************/
-// Set up and connect to MongoDB
-mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Connected to the MongoDB database.");
-  })
-  .catch((err) => {
-    console.log(`There was a problem connecting to MongoDB ... ${err}`);
-  });
 
 /************************
  * ROUTES ***************
