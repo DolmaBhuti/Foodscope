@@ -2,9 +2,9 @@ require("dotenv").config();
 const path = require("path");
 const exphbs = require("express-handlebars");
 const express = require("express");
-const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
+const mongoose = require("mongoose");
 
 const productRoutes = require("./routes/productRoutes");
 const loginRoutes = require("./routes/loginRoutes");
