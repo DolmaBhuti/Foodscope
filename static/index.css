@@ -321,7 +321,7 @@ ul[aria-label="Social links"] a {
 }
 .product-links button {
   font-style: inherit;
-  background-color: #f8f8f8;
+  background-color: var(--color-product-card);
 }
 /* Product Description Page */
 .main-product {
@@ -331,6 +331,7 @@ ul[aria-label="Social links"] a {
   margin-top: 2rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .main-product img {
@@ -338,23 +339,24 @@ ul[aria-label="Social links"] a {
   height: 80%;
   object-fit: cover;
 }
-.main-product-description {
-  width: 50%;
+.main-product-content {
+  width: 40%;
   padding: 0.5rem;
-  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.main-product-description h2 {
+.main-product-content h2 {
   text-decoration: underline;
   text-underline-offset: 8px;
 }
-/* .main-product .main-product-description {
-  border: var(--color-accent) solid 2px;
-  height: 80%;
+.main-product-content button {
+  color: white;
+  background-color: var(--color-dominant);
+  padding: 1rem 2rem;
+  margin-top: 1.5rem;
+  font-size: 1rem;
 }
-.main-product-description h1 {
-  text-decoration: underline;
-  text-underline-offset: 8px;
-} */
 /* Media Query for Mobile Devices */
 @media (max-width: 480px) {
   .hero-container {
@@ -831,29 +833,6 @@ thead th:nth-child(6) {
   }
 }
 
-/*Product Description Page */
-
-.small-product-container {
-  width: 100%;
-}
-.small-product-container .row {
-  display: flex;
-  width: 60%;
-  margin: auto;
-  border: solid 1px white;
-  align-items: center;
-}
-.column-image {
-  flex-basis: 50%;
-}
-.column-image img {
-  width: 100%;
-}
-.column-description {
-  flex-basis: 50%;
-  font-size: 1.5em;
-}
-
 /*Extra small devices (portrait phones, less than 576px)*/
 @media (max-width: 575.98px) {
   .content-container {
@@ -864,19 +843,3 @@ thead th:nth-child(6) {
     row-gap: 0;
   }
 }
-/* 
-// Small devices (landscape phones, less than 768px)
-@media (max-width: 767.98px) {
-  ...;  
-}
-
-// Medium devices (tablets, less than 992px)
-@media (max-width: 991.98px) {
-  ...;
-}
-
-// Large devices (desktops, less than 1200px)
-@media (max-width: 1199.98px) {
-  ...;
-} 
-*/

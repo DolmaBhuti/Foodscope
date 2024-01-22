@@ -2,12 +2,12 @@
   <div class="main-product">
 
     <img src="/images/{{data.filename}}" alt="{{data.ProductName}} photo" />
-    <div class="main-product-description">
+    <div class="main-product-content">
 
-      <h2>
+      <h1>
         {{data.ProductName}}
-      </h2>
-      <h1 class="main-product-price">{{data.ProductPrice}}</h1>
+      </h1>
+      <p class="main-product-price">{{data.ProductPrice}}</p>
 
       <p>{{data.ProductDesc}}</p>
       <form action="/api/cart/add-item-to-cart/{{_id}}" method="post">
