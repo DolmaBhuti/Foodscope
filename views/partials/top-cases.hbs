@@ -4,10 +4,7 @@
     {{#each this}}
       <div class="product-card">
         <a href="/api/products/product_description/{{_id}}">
-
-          {{! <div class="product-img"> }}
-          <img src="/images/{{filename}}" alt="Product Image" />
-          {{! </div> }}
+          <img src="/images/{{filename}}" alt="{{filename}} photo" />
           <div class="product-description">
             <div class="product-details">
               <h4>{{ProductName}}</h4>

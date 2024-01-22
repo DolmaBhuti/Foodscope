@@ -18,9 +18,6 @@ var app = express();
 //set up middlewares using app.use
 app.use(express.static(__dirname + "/static")); //only call the file name or images in "views" folder" (/images/ss.jpg)
 
-/************************
- * Database config      *
- ************************/
 // Set up and connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URL, {
@@ -34,9 +31,7 @@ mongoose
     console.log(`There was a problem connecting to MongoDB ... ${err}`);
   });
 
-/************************
- * express-session   ****
- ************************/
+//express session
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -66,9 +61,6 @@ app.use(express.urlencoded({ extended: false }));
 //any request that cones in, it looks if there is any body in the request and if it does, then it passes it and attaches it to the request object so that we can access it in the request handler
 app.use(express.json()); //https://expressjs.com/en/api.html
 
-/************************
- * HANDLEBARS CONFIG ****
- ************************/
 //server needs to know how to handle HTML files that are formatted using handlebars
 // Register handlebars as the rendering engine for views
 app.engine(
@@ -91,10 +83,6 @@ app.engine(
   })
 );
 app.set("view engine", ".hbs");
-
-/************************
- * ROUTES ***************
- ************************/
 
 //routes -> controller -> model
 
